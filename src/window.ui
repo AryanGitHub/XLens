@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 1.0.3 -->
+<interface>
+  <!-- interface-name window.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.9"/>
+  <template class="XlensMainWindow" parent="AdwApplicationWindow">
+    <property name="default-height">600</property>
+    <property name="default-width">350</property>
+    <child>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <child>
+          <object class="AdwNavigationView" id="app_nav_view">
+            <child>
+              <object class="AdwNavigationPage">
+                <property name="tag">main_page</property>
+                <property name="title">XLens</property>
+                <child>
+                  <object class="AdwToolbarView">
+                    <property name="content">
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="orientation">vertical</property>
+                        <property name="vexpand">True</property>
+                        <property name="width-request">260</property>
+                        <child>
+                          <object class="GtkGrid">
+                            <property name="hexpand">True</property>
+                            <property name="margin-bottom">25</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="file">./image.svg</property>
+                                <property name="hexpand">True</property>
+                                <property name="icon-size">large</property>
+                                <property name="pixel-size">186</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="column-span">1</property>
+                                  <property name="row">0</property>
+                                  <property name="row-span">3</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="justify">center</property>
+                                <property name="label">XLens</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">3</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label">Extract Text from Images</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">4</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkGrid">
+                                <property name="orientation">vertical</property>
+                                <property name="row-homogeneous">True</property>
+                                <property name="vexpand">True</property>
+                                <child>
+                                  <object class="GtkButton" id="paste_button">
+                                    <property name="action-name">win.paste</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="label">From Paste (Ctrl + V)</property>
+                                    <property name="valign">center</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="row">0</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="open_button">
+                                    <property name="action-name">win.open</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="label">Open Image (Ctrl + O)</property>
+                                    <property name="valign">center</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="row">1</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="take_screenshot_button">
+                                    <property name="hexpand">True</property>
+                                    <property name="label">Take Screenshot</property>
+                                    <property name="valign">center</property>
+                                    <signal name="clicked" handler="take_screenshot_button_clicked"/>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="row">2</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="url_button">
+                                    <property name="hexpand">True</property>
+                                    <property name="label">From URL (Ctrl + V)</property>
+                                    <property name="valign">center</property>
+                                    <signal name="clicked" handler="from_url_button_clicked"/>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="row">3</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">5</property>
+                                  <property name="row-span">4</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                    <property name="hexpand">True</property>
+                    <child type="top">
+                      <object class="AdwHeaderBar">
+                        <child type="start">
+                          <object class="GtkButton">
+                            <property name="icon-name">preferences-system</property>
+                            <signal name="clicked" handler="menu_button_clicked"/>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwNavigationPage">
+                <property name="tag">from_url_page</property>
+                <property name="title">Extract Text From URL</property>
+                <child>
+                  <object class="AdwToolbarView">
+                    <property name="content">
+                      <object class="GtkGrid">
+                        <property name="halign">center</property>
+                        <property name="orientation">vertical</property>
+                        <property name="row-spacing">10</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="halign">center</property>
+                            <property name="icon-name">preferences-system-search</property>
+                            <property name="pixel-size">200</property>
+                            <property name="valign">center</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">0</property>
+                              <property name="row-span">6</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="focus-on-click">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="label">Paste Image URL to Extract Text</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">6</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="focus-on-click">False</property>
+                            <property name="halign">center</property>
+                            <property name="justify">center</property>
+                            <property name="label">Link must point directly to
+an image file (e.g., JPEG, PNG, GIF)</property>
+                            <property name="width-request">-1</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">7</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="focus-on-click">False</property>
+                            <property name="halign">center</property>
+                            <property name="justify">center</property>
+                            <property name="label">You can also just paste URL on main screen to.
+</property>
+                            <property name="wrap">False</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">8</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSearchEntry" id="URL_entry">
+                            <property name="hexpand">True</property>
+                            <property name="placeholder-text">https://example.org/image.png</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">9</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="label">Extract Text</property>
+                            <signal name="clicked" handler="on_extract_text_from_url_button_clicked" swapped="False" object="URL_entry"/>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">10</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                    <child type="top">
+                      <object class="AdwHeaderBar">
+                        <child type="start">
+                          <object class="GtkButton">
+                            <property name="icon-name">open-menu-symbolic</property>
+                            <signal name="clicked" handler="header_button_clicked"/>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

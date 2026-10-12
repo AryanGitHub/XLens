@@ -1,0 +1,9 @@
+[project]
+name = "XLens"
+description = "A simple, beautiful GTK4 app to extract text from images"
+
+[tool.ruff]
+# The standard line length (same as Black)
+line-length = 88
+# In addition to the standard set of inclusions, include `.in` files.
+extend-include = ["*.in"]

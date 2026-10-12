@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="xlens">
+	<schema id="org.gnome.gitlab.oumuamua.XLens" path="/org/gnome/gitlab/oumuamua/XLens/">
+	</schema>
+</schemalist>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 1.0.3 -->
+<interface>
+  <!-- interface-name preference.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.9"/>
+  <template class="PreferencesPage" parent="AdwNavigationPage">
+    <property name="tag">preferences_page</property>
+    <child>
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="GtkBox">
+            <property name="hexpand">True</property>
+            <property name="margin-bottom">15</property>
+            <property name="margin-end">15</property>
+            <property name="margin-start">15</property>
+            <property name="orientation">vertical</property>
+            <property name="vexpand">True</property>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">Miscellaneous</property>
+                <child>
+                  <object class="AdwSwitchRow" id="switch_auto_copy">
+                    <property name="icon-name">edit-copy</property>
+                    <property name="subtitle">Automatically Copy output extracted text to the Clipboard </property>
+                    <property name="title">AutoCopy Result to Clipboard</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="switch_save_screenshot">
+                    <property name="icon-name">image-x-generic-symbolic</property>
+                    <property name="subtitle">Save the captured screenshots</property>
+                    <property name="title">Save Screenshot</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

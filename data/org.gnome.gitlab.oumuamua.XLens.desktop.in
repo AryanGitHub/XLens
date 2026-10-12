@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=XLens
+Exec=xlens
+Icon=org.gnome.gitlab.oumuamua.XLens
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

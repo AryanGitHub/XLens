@@ -1,0 +1,13 @@
+# Meson build directory
+build/
+
+# Python Virtual Environment
+.venv/
+
+# Ruff Cache
+.ruff_cache/
+
+# Python compiled bytecode
+__pycache__/
+*.pyc
+*.pyo

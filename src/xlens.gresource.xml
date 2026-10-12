@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 1.0.3 -->
+<gresources>
+  <gresource prefix="/org/gnome/gitlab/oumuamua/XLens">
+    <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
+    <file preprocess="xml-stripblanks">PreferencesPage.ui</file>
+    <file preprocess="xml-stripblanks">OutputViewer.ui</file>
+    <file>logging_config.json</file>
+  </gresource>
+</gresources>
