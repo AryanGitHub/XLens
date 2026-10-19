@@ -6,6 +6,7 @@
     <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
     <file preprocess="xml-stripblanks">PreferencesPage.ui</file>
     <file preprocess="xml-stripblanks">OutputViewer.ui</file>
+    <file preprocess="xml-stripblanks">FromURLPage.ui</file>
     <file>logging_config.json</file>
   </gresource>
 </gresources>

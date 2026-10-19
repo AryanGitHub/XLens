@@ -1,10 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<!-- Created with Cambalache 1.0.3 -->
+<!-- Created with Cambalache 1.2.0 -->
 <cambalache-project version="1.0.0" target_tk="gtk-4.0" depends="libadwaita-1">
-  <gresources filename="xlens.gresource.xml" sha256="87b1eb471e6dffda3091eee69e64e30bdd67cec7a81c924e002118caf0106a33"/>
-  <ui template-class="PreferencesPage" filename="PreferencesPage.ui" sha256="ad12c2787fb6b93055ed58d092a6ae7da40096fc9330f18b9b61b919761ce89b"/>
-  <ui filename="shortcuts-dialog.ui" sha256="ae630e436653844a190e30b092f7731e8c896a4086cf7dd5244ad1a88304c022"/>
-  <ui template-class="OutputViewerWindow" filename="OutputViewer.ui" sha256="46a89bd5e779a7ffb9863d988da15c1ee0dc980f029b31e44a81881836cc50fe"/>
-  <ui template-class="XlensMainWindow" filename="window.ui" sha256="7fa3c0007fe178022a63f573103a5c1c71d03be3ad1cec066594276d216341a4"/>
+  <gresources filename="xlens.gresource.xml"/>
+  <ui template-class="PreferencesPage" filename="PreferencesPage.ui"/>
+  <ui filename="shortcuts-dialog.ui"/>
+  <ui template-class="OutputViewerWindow" filename="OutputViewer.ui"/>
+  <ui template-class="XlensMainWindow" filename="window.ui"/>
+  <ui template-class="FromURLPage" filename="FromURLPage.ui"/>
+  <ui>
+    <content><![CDATA[<interface/>
+]]></content>
+  </ui>
 </cambalache-project>

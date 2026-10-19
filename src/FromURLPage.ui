@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 1.2.0 -->
+<interface>
+  <requires lib="gtk" version="4.22"/>
+  <requires lib="libadwaita" version="1.4"/>
+  <template class="FromURLPage" parent="AdwNavigationPage">
+    <property name="tag">from_url_page</property>
+    <property name="title">Extract Text From URL</property>
+    <child>
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="GtkGrid">
+            <property name="halign">center</property>
+            <property name="orientation">vertical</property>
+            <property name="row-spacing">10</property>
+            <child>
+              <object class="GtkImage">
+                <property name="halign">center</property>
+                <property name="icon-name">preferences-system-search</property>
+                <property name="pixel-size">200</property>
+                <property name="valign">center</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="row-span">6</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="focus-on-click">False</property>
+                <property name="hexpand">True</property>
+                <property name="label">Paste Image URL to Extract Text</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">6</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="focus-on-click">False</property>
+                <property name="halign">center</property>
+                <property name="justify">center</property>
+                <property name="label">Link must point directly to
+an image file (e.g., JPEG, PNG, GIF)</property>
+                <property name="width-request">-1</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">7</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="focus-on-click">False</property>
+                <property name="halign">center</property>
+                <property name="justify">center</property>
+                <property name="label">You can also just paste URL on main screen to.
+</property>
+                <property name="wrap">False</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">8</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSearchEntry" id="URL_entry">
+                <property name="hexpand">True</property>
+                <property name="placeholder-text">https://example.org/image.png</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">9</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label">Extract Text</property>
+                <signal name="clicked" handler="on_extract_text_from_url_button_clicked" swapped="False" object="URL_entry"/>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">10</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="start">
+              <object class="GtkButton">
+                <property name="icon-name">open-menu-symbolic</property>
+                <signal name="clicked" handler="header_button_clicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -18,10 +18,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from .PreferencesPage import PreferencesPage
+from .FromURLPage import FromURLPage
 from .constants import configPath, loggingConfigPath, app_id, toast_timeout
 from .ImageProcessingContext import ImageProcessingContext as IPC
 from gi.repository import Gtk, Adw, Gdk, Gio, Xdp, XdpGtk4, GLib
-
 
 from . import appLogger
 
@@ -36,7 +36,6 @@ class XlensMainWindow(Adw.ApplicationWindow):
     portal = Xdp.Portal()
     app_nav_view = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
-    URL_entry = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -66,12 +65,14 @@ class XlensMainWindow(Adw.ApplicationWindow):
         self.PreferencesPage = PreferencesPage()
         self.app_nav_view.add(self.PreferencesPage)
 
-        self.app_nav_view.connect("popped", self.on_back_from_url_page)
+        self.FromURLPage = FromURLPage(
+            app_nav_view=self.app_nav_view,
+            application=self.get_application(),
+            getErrorCallbackGenerateToastFunction=self.getErrorCallbackGenerateToastFunction,
+        )
+        self.app_nav_view.add(self.FromURLPage)
 
-    def on_back_from_url_page(self, nav_view, popped_page):
-        # clear search buffer when back button is pressed.
-        if popped_page.get_tag() == "from_url_page":
-            self.URL_entry.set_text("")
+        self.app_nav_view.connect("popped", self.FromURLPage.on_back_from_url_page)
 
     def on_close_request(self, window):
 
@@ -197,29 +198,6 @@ class XlensMainWindow(Adw.ApplicationWindow):
         logger.info(f"{button} clicked.")
         self.app_nav_view.push_by_tag("from_url_page")
         logger.info(f"Pushed to 'from_url_page'")
-
-    @Gtk.Template.Callback()
-    def on_extract_text_from_url_button_clicked(self, entry):
-        logger.debug(f"Extract text from URL button clicked")
-        url_link = entry.get_text().strip()
-        logger.debug(f"URL link from search entry : {url_link}")
-        if not url_link:
-            logger.error(f"URL link from search entry is empty")
-            self.getErrorCallbackGenerateToastFunction()("Empty URL Entry")
-        else:
-            sourceType = IPC.ImageInputSourceType.URL
-            result_success = IPC.getOutput(
-                sourceType,
-                url_link,
-                self.getErrorCallbackGenerateToastFunction(),
-                self.get_application(),
-            )
-            if result_success:
-                entry.set_text("")
-                ret = self.app_nav_view.pop()
-                logger.debug(
-                    f"returned to main screen : {ret} , entry buffered cleared."
-                )
 
     def restrict_actions_to_main_page(self):
         def on_visible_page_changed(nav_view, param_spec, window):
