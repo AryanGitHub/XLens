@@ -40,14 +40,16 @@ logger = appLogger.getLogger(__name__)
 class XlensApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self):
+    def __init__(self, version):
         super().__init__(
             application_id="org.gnome.gitlab.oumuamua.XLens",
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
             resource_base_path="/org/gnome/gitlab/oumuamua/XLens",
         )
+        self.version = version
         logger.info("App started.")
         logger.info(f"Application_id={self.get_application_id()}")
+        logger.info(f"Application version : {self.version}")
         self.create_action("quit", lambda *_: self.quit(), ["<control>q"])
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action)
@@ -75,7 +77,7 @@ class XlensApplication(Adw.Application):
             application_name="XLens",
             application_icon="org.gnome.gitlab.oumuamua.XLens",
             developer_name="Oumuamua",
-            version="0.1.0",
+            version=self.version,
             # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
             translator_credits=_("translator-credits"),
             developers=["Oumuamua"],
@@ -107,5 +109,5 @@ def main(version):
     """The application's entry point."""
     asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
-    app = XlensApplication()
+    app = XlensApplication(version)
     return app.run(sys.argv)
