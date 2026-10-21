@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.gnome.gitlab.oumuamua.XLens</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>XLens</name>
+  <summary>An OCR GTK4 and Libadwaita app</summary>
+  <description>
+    <p>
+    A native Optical Character Recognition (OCR) application for the GNOME desktop, built with GTK4 and Libadwaita.
+    Extract text from images and scanned documents seamlessly with a modern, adaptive user interface.
+    </p>
+  </description>
+
+  <developer id="org.gnome.gitlab.oumuamua">
+    <name>Aryan Pandey</name>
+  </developer>
+
+  <!-- Required: Should be a link to the upstream homepage for the component -->
+  <url type="homepage">https://gitlab.gnome.org/Oumuamua/xlens</url>
+  <!-- Recommended: It is highly recommended for open-source projects to display the source code repository -->
+  <url type="vcs-browser">https://gitlab.gnome.org/Oumuamua/xlens</url>
+  <!-- Should point to the software's bug tracking system, for users to report new bugs -->
+  <url type="bugtracker">https://gitlab.gnome.org/Oumuamua/xlens/-/work_items</url>
+
+  <!-- This could for example be an HTTPS URL to an online form or a page describing how to contact the developer -->
+  <url type="contact">https://aryangithub.github.io/personal-website/contact</url>
+  <!-- URLs of this type should point to a webpage showing information on how to contribute to the described software project -->
+  <url type="contribute">https://gitlab.gnome.org/Oumuamua/xlens</url>
+
+  
+  <!-- All graphical applications having a desktop file must have this tag in the MetaInfo.
+     If this is present, appstreamcli compose will pull icons, keywords and categories from the desktop file. -->
+  <launchable type="desktop-id">org.gnome.gitlab.oumuamua.XLens.desktop</launchable>
+  <!-- Use the OARS website (https://hughsie.github.io/oars/generate.html) to generate these and make sure to use oars-1.1 -->
+  <content_rating type="oars-1.1" />
+
+
+
+
+
+  <releases>
+    <release version="0.0.5" date="2026-10-22">
+      <description translate="no">
+        <p>First Alpha Release</p>
+      </description>
+    </release>
+  </releases>
+
+</component>
