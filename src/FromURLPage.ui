@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Cambalache 1.2.0 -->
 <interface>
+  <!-- interface-name FromURLPage.ui -->
   <requires lib="gtk" version="4.22"/>
   <requires lib="libadwaita" version="1.4"/>
   <template class="FromURLPage" parent="AdwNavigationPage">
@@ -78,7 +79,7 @@ an image file (e.g., JPEG, PNG, GIF)</property>
             <child>
               <object class="GtkButton">
                 <property name="label">Extract Text</property>
-                <signal name="clicked" handler="on_extract_text_from_url_button_clicked" swapped="False" object="URL_entry"/>
+                <signal name="clicked" handler="on_extract_text_from_url_button_clicked"/>
                 <layout>
                   <property name="column">0</property>
                   <property name="row">10</property>
