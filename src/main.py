@@ -32,6 +32,7 @@ from gi.events import GLibEventLoopPolicy
 import asyncio
 from . import appLogger
 from .window import XlensMainWindow
+from collections.abc import Callable
 
 appLogger.configure_app_logging()
 logger = appLogger.getLogger(__name__)
@@ -40,7 +41,7 @@ logger = appLogger.getLogger(__name__)
 class XlensApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self, version):
+    def __init__(self, version: str):
         super().__init__(
             application_id="org.gnome.gitlab.oumuamua.XLens",
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
@@ -59,7 +60,7 @@ class XlensApplication(Adw.Application):
         self.set_accels_for_action("win.paste", ["<Ctrl>v"])
         logger.debug("Setting Ctrl+P to action 'paste'")
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         """Called when the application is activated.
 
         We raise the application's main window, creating it if
@@ -71,7 +72,7 @@ class XlensApplication(Adw.Application):
             logger.info("Main Window Initilised")
         win.present()
 
-    def on_about_action(self, *args):
+    def on_about_action(self, *args) -> None:
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
             application_name="XLens",
@@ -85,11 +86,13 @@ class XlensApplication(Adw.Application):
         )
         about.present(self.props.active_window)
 
-    def on_preferences_action(self, widget, _):
+    def on_preferences_action(self, widget, _) -> None:
         """Callback for the app.preferences action."""
         print("app.preferences action activated")
 
-    def create_action(self, name, callback, shortcuts=None):
+    def create_action(
+        self, name: str, callback: Callable[..., None], shortcuts=None
+    ) -> None:
         """Add an application action.
 
         Args:
@@ -105,7 +108,7 @@ class XlensApplication(Adw.Application):
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
-def main(version):
+def main(version: str):
     """The application's entry point."""
     asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
