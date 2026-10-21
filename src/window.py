@@ -19,10 +19,10 @@
 
 from .PreferencesPage import PreferencesPage
 from .FromURLPage import FromURLPage
-from .constants import configPath, loggingConfigPath, app_id, toast_timeout
+from .constants import configPath, loggingConfigPath, toast_timeout
 from .ImageProcessingContext import ImageProcessingContext as IPC
 from gi.repository import Gtk, Adw, Gdk, Gio, Xdp, XdpGtk4, GLib
-
+from collections.abc import Callable
 from . import appLogger
 
 appLogger.configure_app_logging()
@@ -74,25 +74,25 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
         self.app_nav_view.connect("popped", self.FromURLPage.on_back_from_url_page)
 
-    def on_close_request(self, window):
+    def on_close_request(self, window) -> bool:
 
         self.get_application().quit()
 
         # Return False so GTK handles the default window destruction
         return False
 
-    def open_file_dialog(self, action, parameter):
+    def open_file_dialog(self, action, parameter) -> None:
         logger.info("Open Action Started.")
 
-        def on_open_response(dialog, result):
-            file = dialog.open_finish(result)
+        def on_open_response(dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
+            file: Gio.File | None = dialog.open_finish(result)
             # If the user selected a file...
             if file is not None:
                 # ... open it
                 logger.info(f"File Selected. {file}")
                 open_file(file)
 
-        def open_file(file):
+        def open_file(file: Gio.File) -> None:
             file_path = file.peek_path()
             logger.info(f"file path = {file_path}")
             sourceType = IPC.ImageInputSourceType.FILE_PATH
@@ -108,7 +108,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
         native.open(self, None, on_open_response)
         logger.info("Gtk File Dialog Opened")
 
-    def start_paste_procedure(self, action, parameter):
+    def start_paste_procedure(self, action, parameter) -> None:
 
         logger.debug(f"started paste action")
 
@@ -119,7 +119,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
         clipboard = Gdk.Display.get_default().get_clipboard()
 
         # 3. This callback runs when the clipboard data is ready
-        def on_paste_image(clipboard, result):
+        def on_paste_image(clipboard, result) -> None:
             try:
                 # Retrieve the Gdk.Texture from the async result
                 texture = clipboard.read_texture_finish(result)
@@ -154,15 +154,15 @@ class XlensMainWindow(Adw.ApplicationWindow):
         clipboard.read_texture_async(None, on_paste_image)
 
     @Gtk.Template.Callback()
-    def menu_button_clicked(self, button):
+    def menu_button_clicked(self, button) -> None:
         logger.info("Preferences button clicked.")
         self.app_nav_view.push_by_tag("preferences_page")
 
     @Gtk.Template.Callback()
-    def take_screenshot_button_clicked(self, button):
+    def take_screenshot_button_clicked(self, button) -> None:
         logger.debug(f"take screenshot button clicked")
 
-        def take_screenshot_callback_function(portal, result, user_data):
+        def take_screenshot_callback_function(portal, result, user_data) -> None:
             try:
                 image_uri = portal.take_screenshot_finish(result)
 
@@ -194,12 +194,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
             logger.error(f"Failed to initiate screenshot: {e}")
 
     @Gtk.Template.Callback()
-    def from_url_button_clicked(self, button):
+    def from_url_button_clicked(self, button) -> None:
         logger.info(f"{button} clicked.")
         self.app_nav_view.push_by_tag("from_url_page")
         logger.info(f"Pushed to 'from_url_page'")
 
-    def restrict_actions_to_main_page(self):
+    def restrict_actions_to_main_page(self) -> None:
         def on_visible_page_changed(nav_view, param_spec, window):
 
             current_page = nav_view.get_visible_page()
@@ -220,10 +220,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
             "Successfully, put the restrictions of actions to only work on main page."
         )
 
-    def getErrorCallbackGenerateToastFunction(self):
+    def getErrorCallbackGenerateToastFunction(self) -> Callable[[str, int], None]:
         toast_overlay = self.toast_overlay
 
-        def errorCallbackGenerateToastFunction(message, timeout=toast_timeout):
+        def errorCallbackGenerateToastFunction(
+            message: str, timeout: int = toast_timeout
+        ) -> None:
             toast = Adw.Toast.new(message)
             toast.set_timeout(timeout)
             toast_overlay.add_toast(toast)
