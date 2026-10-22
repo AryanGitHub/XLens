@@ -1,5 +1,7 @@
+from collections.abc import Callable
 from enum import Enum
 
+from gi.repository import Gtk
 from PIL import Image
 
 from . import ConfigManager, appLogger
@@ -23,15 +25,15 @@ class ImageProcessingContext:
         URL = 2
         IMAGE = 3
 
-    def __init__(self, path: str, application):
-        self.image: Image = None
-        self.outputText: str = None
+    def __init__(self, path: str, application: Gtk.Application):
+        self.image: Image | None = None
+        self.outputText: str | None = None
         self.errorStatus = None
         self.config_manager = ConfigManager.ConfigManager(path)
-        self.application = application
+        self.application: Gtk.Application = application
         logger.debug(f"ImageProcessingContext initialized. {self}")
 
-    def getText(self):
+    def getText(self) -> str:
         logger.debug("getText method called.")
         if not self.image:
             logger.error("self.image is None, cannot Proceed further to extract text.")
@@ -76,7 +78,7 @@ class ImageProcessingContext:
                 )
                 raise  # for correct toast error
 
-    def setImageFromUrl(self, url: str):
+    def setImageFromUrl(self, url: str) -> None:
         import urllib.error
         import urllib.request
         from io import BytesIO
@@ -101,7 +103,7 @@ class ImageProcessingContext:
             )
             raise SetImageException("Invalid Image Data")
 
-    def setImageFromFilePath(self, filePath: str):
+    def setImageFromFilePath(self, filePath: str) -> None:
         import os.path
 
         logger.debug("Set Image from FilePath")
@@ -120,12 +122,12 @@ class ImageProcessingContext:
                 )
                 raise SetImageException("Unable to load Image")
 
-    def setImageFromImage(self, image: Image):
+    def setImageFromImage(self, image: Image) -> None:
         logger.debug("Set Image from another Image")
         self.image = image
         logger.info(f"successfully set Image from Another Image {self.image}")
 
-    def getTextFromTesseract4(self):
+    def getTextFromTesseract4(self) -> str:
         try:
             import pytesseract
 
@@ -135,7 +137,7 @@ class ImageProcessingContext:
             logger.error(f"Unable to Process Image via Tesseract4, error message = {e}")
             raise ImageProcessingException("unable to Process Image via Tesseract4")
 
-    def setOutputWindowPresent(self):
+    def setOutputWindowPresent(self) -> None:
         if self.outputText:
             # get ID as static variable, that gets updated for every of this call
             self.outputWindow = OVW(application=self.application)
@@ -147,12 +149,12 @@ class ImageProcessingContext:
     @staticmethod
     def getOutput(
         inputSourceType: ImageInputSourceType,
-        source,
-        errorCallbackFunction,
-        application,
-    ):
+        source: str | Image | None,
+        errorCallbackFunction: Callable[[str], None],
+        application: Gtk.Application,
+    ) -> None:
         logger.debug(f"Image source type {inputSourceType}")
-        ipc = ImageProcessingContext(configPath, application)
+        ipc: ImageProcessingContext = ImageProcessingContext(configPath, application)
         try:
             match inputSourceType:
                 case ImageProcessingContext.ImageInputSourceType.FILE_PATH:
@@ -181,6 +183,5 @@ class ImageProcessingContext:
                 logger.info("Error Callback Function called.")
                 errorCallbackFunction(str(e))
                 logger.debug("Exiting from Callback")
-
         finally:
             pass
