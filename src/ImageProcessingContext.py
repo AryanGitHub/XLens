@@ -1,9 +1,10 @@
-from PIL import Image
-from . import ConfigManager
-from .OutputViewer import OutputViewerWindow as OVW
 from enum import Enum
-from .constants import configPath, loggingConfigPath, app_id
-from . import appLogger
+
+from PIL import Image
+
+from . import ConfigManager, appLogger
+from .constants import configPath
+from .OutputViewer import OutputViewerWindow as OVW
 
 logger = appLogger.getLogger(__name__)
 
@@ -76,17 +77,18 @@ class ImageProcessingContext:
                 raise  # for correct toast error
 
     def setImageFromUrl(self, url: str):
-        import urllib.request, urllib.error
+        import urllib.error
+        import urllib.request
         from io import BytesIO
 
-        logger.debug(f"Set Image from URL.")
+        logger.debug("Set Image from URL.")
         logger.info(f"URL To get Image From {url}")
         try:
             with urllib.request.urlopen(url) as response:
                 image_data = response.read()
                 logger.debug(f"successfully got response. Response = {response}")
                 self.image = Image.open(BytesIO(image_data))
-                logger.info(f"successfully set Image from URL")
+                logger.info("successfully set Image from URL")
         except urllib.error.URLError as e:
             logger.error(f"Network error while fetching image from {url}: {e}")
             raise SetImageException("Network error")
