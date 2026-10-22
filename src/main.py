@@ -18,21 +18,23 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
-import gi
-
 from gettext import gettext as _
+
+import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("Xdp", "1.0")
 gi.require_version("XdpGtk4", "1.0")
 
-from gi.repository import Gtk, Adw, Gio
-from gi.events import GLibEventLoopPolicy
 import asyncio
+from collections.abc import Callable
+
+from gi.events import GLibEventLoopPolicy
+from gi.repository import Adw, Gio
+
 from . import appLogger
 from .window import XlensMainWindow
-from collections.abc import Callable
 
 appLogger.configure_app_logging()
 logger = appLogger.getLogger(__name__)
