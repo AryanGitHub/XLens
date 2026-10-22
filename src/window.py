@@ -28,6 +28,10 @@ from . import appLogger
 appLogger.configure_app_logging()
 logger = appLogger.getLogger(__name__)
 
+import gettext
+
+_ = gettext.gettext
+
 
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/window.ui")
 class XlensMainWindow(Adw.ApplicationWindow):
