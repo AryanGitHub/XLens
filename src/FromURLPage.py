@@ -2,11 +2,12 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gdk, Gio
-from .constants import configPath, loggingConfigPath, app_id
-from .ConfigManager import ConfigManager
-from .ImageProcessingContext import ImageProcessingContext as IPC
+from gi.repository import Adw, Gtk
+
 from . import appLogger
+from .ConfigManager import ConfigManager
+from .constants import configPath
+from .ImageProcessingContext import ImageProcessingContext as IPC
 
 logger = appLogger.getLogger(__name__)
 
