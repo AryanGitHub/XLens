@@ -15,8 +15,8 @@ _ = gettext.gettext
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/OutputViewer.ui")
 class OutputViewerWindow(Adw.ApplicationWindow):
     __gtype_name__ = "OutputViewerWindow"
-    outputTextView = Gtk.Template.Child()
-    ID = 0
+    outputTextView: Gtk.TextView = Gtk.Template.Child()
+    ID: int = 0
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -24,7 +24,7 @@ class OutputViewerWindow(Adw.ApplicationWindow):
         self.set_title(_("Output {ID}").format(ID=OutputViewerWindow.ID))
         logger.info(f"Output Window Initialized, title = '{self.get_title()}'")
 
-    def setOutputText(self, text: str):
+    def setOutputText(self, text: str) -> None:
         buffer = self.outputTextView.get_buffer()
         buffer.set_text(text)
         logger.debug("Successfully set text on output window.")
