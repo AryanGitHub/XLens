@@ -90,14 +90,7 @@ an image file (e.g., JPEG, PNG, GIF)</property>
           </object>
         </property>
         <child type="top">
-          <object class="AdwHeaderBar">
-            <child type="start">
-              <object class="GtkButton">
-                <property name="icon-name">open-menu-symbolic</property>
-                <signal name="clicked" handler="header_button_clicked"/>
-              </object>
-            </child>
-          </object>
+          <object class="AdwHeaderBar"/>
         </child>
       </object>
     </child>
