@@ -11,6 +11,10 @@ from .ImageProcessingContext import ImageProcessingContext as IPC
 
 logger = appLogger.getLogger(__name__)
 
+import gettext
+
+_ = gettext.gettext
+
 
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/FromURLPage.ui")
 class FromURLPage(Adw.NavigationPage):
@@ -44,7 +48,7 @@ class FromURLPage(Adw.NavigationPage):
         logger.debug(f"URL link from search entry : {url_link}")
         if not url_link:
             logger.error("URL link from search entry is empty")
-            self.getErrorCallbackGenerateToastFunction()("Empty URL Entry")
+            self.getErrorCallbackGenerateToastFunction()(_("Empty URL Entry"))
         else:
             sourceType = IPC.ImageInputSourceType.URL
             result_success = IPC.getOutput(
