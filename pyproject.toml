@@ -7,3 +7,8 @@ description = "A simple, beautiful GTK4 app to extract text from images"
 line-length = 88
 # In addition to the standard set of inclusions, include `.in` files.
 extend-include = ["*.in"]
+
+ignore = [
+    "UP032", # Due to translatable strings cannot use f strings.  Read More at : https://docs.astral.sh/ruff/rules/f-string/#f-string-up032
+    
+]
