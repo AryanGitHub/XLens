@@ -13,7 +13,8 @@
           <object class="GtkGrid">
             <property name="halign">center</property>
             <property name="orientation">vertical</property>
-            <property name="row-spacing">10</property>
+            <property name="row-spacing">30</property>
+            <property name="valign">center</property>
             <child>
               <object class="GtkImage">
                 <property name="halign">center</property>

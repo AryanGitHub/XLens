@@ -10,11 +10,13 @@
       <object class="AdwToolbarView">
         <property name="content">
           <object class="GtkBox">
+            <property name="halign">center</property>
             <property name="hexpand">True</property>
             <property name="margin-bottom">15</property>
             <property name="margin-end">15</property>
             <property name="margin-start">15</property>
             <property name="orientation">vertical</property>
+            <property name="valign">baseline-fill</property>
             <property name="vexpand">True</property>
             <child>
               <object class="AdwPreferencesGroup">

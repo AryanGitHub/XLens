@@ -28,6 +28,8 @@
                             <property name="hexpand">True</property>
                             <property name="margin-bottom">25</property>
                             <property name="orientation">vertical</property>
+                            <property name="row-homogeneous">True</property>
+                            <property name="valign">center</property>
                             <child>
                               <object class="GtkImage">
                                 <property name="file">./image.svg</property>
