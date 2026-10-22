@@ -36,13 +36,15 @@ class FromURLPage(Adw.NavigationPage):
 
         logger.info("'FromURL' Page Initialized")
 
-    def on_back_from_url_page(self, nav_view, popped_page):
+    def on_back_from_url_page(
+        self, nav_view: Adw.NavigationView, popped_page: Adw.NavigationPage
+    ) -> None:
         # clear search buffer when back button is pressed.
         if popped_page.get_tag() == "from_url_page":
             self.URL_entry.set_text("")
 
     @Gtk.Template.Callback()
-    def on_extract_text_from_url_button_clicked(self, entry):
+    def on_extract_text_from_url_button_clicked(self, entry) -> None:
         logger.debug("Extract text from URL button clicked")
         url_link = self.URL_entry.get_text().strip()
         logger.debug(f"URL link from search entry : {url_link}")
