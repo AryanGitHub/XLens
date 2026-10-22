@@ -30,13 +30,13 @@ class PreferencesPage(Adw.NavigationPage):
         self._load_switch_auto_copy()
         self._connect_switch_auto_copy()
 
-    def _load_switch_auto_copy(self):
-        value = self.configManager.get("Enable_Save_Images")
+    def _load_switch_auto_copy(self) -> None:
+        value: str = self.configManager.get("Enable_Save_Images")
         self.switch_auto_copy.set_active(value)
         logger.debug(f"Loaded Settings 'switch_auto_copy' to '{value}'")
 
-    def _connect_switch_auto_copy(self):
-        def callback(switch_row, pspec):
+    def _connect_switch_auto_copy(self) -> None:
+        def callback(switch_row: Gtk.Switch, pspec):
             is_active = switch_row.props.active
             self.configManager.set("Enable_Save_Images", is_active)
 
