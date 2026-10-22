@@ -17,13 +17,15 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .PreferencesPage import PreferencesPage
-from .FromURLPage import FromURLPage
-from .constants import configPath, loggingConfigPath, toast_timeout
-from .ImageProcessingContext import ImageProcessingContext as IPC
-from gi.repository import Gtk, Adw, Gdk, Gio, Xdp, XdpGtk4, GLib
 from collections.abc import Callable
+
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Xdp, XdpGtk4
+
 from . import appLogger
+from .constants import toast_timeout
+from .FromURLPage import FromURLPage
+from .ImageProcessingContext import ImageProcessingContext as IPC
+from .PreferencesPage import PreferencesPage
 
 appLogger.configure_app_logging()
 logger = appLogger.getLogger(__name__)
