@@ -30,7 +30,7 @@ class FromURLPage(Adw.NavigationPage):
             getErrorCallbackGenerateToastFunction
         )
 
-        logger.info(f"'FromURL' Page Initialized")
+        logger.info("'FromURL' Page Initialized")
 
     def on_back_from_url_page(self, nav_view, popped_page):
         # clear search buffer when back button is pressed.
@@ -39,11 +39,11 @@ class FromURLPage(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def on_extract_text_from_url_button_clicked(self, entry):
-        logger.debug(f"Extract text from URL button clicked")
+        logger.debug("Extract text from URL button clicked")
         url_link = self.URL_entry.get_text().strip()
         logger.debug(f"URL link from search entry : {url_link}")
         if not url_link:
-            logger.error(f"URL link from search entry is empty")
+            logger.error("URL link from search entry is empty")
             self.getErrorCallbackGenerateToastFunction()("Empty URL Entry")
         else:
             sourceType = IPC.ImageInputSourceType.URL

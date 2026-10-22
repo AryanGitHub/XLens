@@ -104,7 +104,7 @@ class ImageProcessingContext:
     def setImageFromFilePath(self, filePath: str):
         import os.path
 
-        logger.debug(f"Set Image from FilePath")
+        logger.debug("Set Image from FilePath")
         logger.info(f"File Path To get Image From {filePath}")
 
         if not os.path.isfile(filePath):
@@ -121,7 +121,7 @@ class ImageProcessingContext:
                 raise SetImageException("Unable to load Image")
 
     def setImageFromImage(self, image: Image):
-        logger.debug(f"Set Image from another Image")
+        logger.debug("Set Image from another Image")
         self.image = image
         logger.info(f"successfully set Image from Another Image {self.image}")
 

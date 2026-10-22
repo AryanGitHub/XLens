@@ -116,10 +116,11 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
     def start_paste_procedure(self, action, parameter) -> None:
 
-        logger.debug(f"started paste action")
+        logger.debug("started paste action")
+
+        from io import BytesIO
 
         from PIL import Image
-        from io import BytesIO
 
         # 1. Get the clipboard from the default display
         clipboard = Gdk.Display.get_default().get_clipboard()
@@ -166,7 +167,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def take_screenshot_button_clicked(self, button) -> None:
-        logger.debug(f"take screenshot button clicked")
+        logger.debug("take screenshot button clicked")
 
         def take_screenshot_callback_function(portal, result, user_data) -> None:
             try:
@@ -203,7 +204,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
     def from_url_button_clicked(self, button) -> None:
         logger.info(f"{button} clicked.")
         self.app_nav_view.push_by_tag("from_url_page")
-        logger.info(f"Pushed to 'from_url_page'")
+        logger.info("Pushed to 'from_url_page'")
 
     def restrict_actions_to_main_page(self) -> None:
         def on_visible_page_changed(nav_view, param_spec, window):

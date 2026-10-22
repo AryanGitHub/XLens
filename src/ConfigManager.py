@@ -36,7 +36,7 @@ class ConfigManager:
                 return self.configs[key]
             else:
                 self.configs[key] = DEFAULT_CONFIGS[key]
-                logger.debug(f"key not found in config, using default configs")
+                logger.debug("key not found in config, using default configs")
                 return self.configs[key]
         else:
             logger.critical("config key not found")

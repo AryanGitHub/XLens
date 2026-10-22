@@ -26,7 +26,7 @@ class PreferencesPage(Adw.NavigationPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.set_title("XLens - " + _("Preferences"))
-        logger.info(f"Settings Window Initialized")
+        logger.info("Settings Window Initialized")
         self._load_switch_auto_copy()
         self._connect_switch_auto_copy()
 
