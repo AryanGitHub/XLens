@@ -6,6 +6,9 @@ from gi.repository import Gtk, Adw, Gdk, Gio
 from . import appLogger
 
 logger = appLogger.getLogger(__name__)
+import gettext
+
+_ = gettext.gettext
 
 
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/OutputViewer.ui")
@@ -17,7 +20,7 @@ class OutputViewerWindow(Adw.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         OutputViewerWindow.ID = OutputViewerWindow.ID + 1
-        self.set_title(f"Output {OutputViewerWindow.ID}")
+        self.set_title(_("Output {ID}").format(ID=OutputViewerWindow.ID))
         logger.info(f"Output Window Initialized, title = '{self.get_title()}'")
 
     def setOutputText(self, text: str):
