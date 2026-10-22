@@ -6,7 +6,7 @@
   <requires lib="libadwaita" version="1.4"/>
   <template class="FromURLPage" parent="AdwNavigationPage">
     <property name="tag">from_url_page</property>
-    <property name="title">Extract Text From URL</property>
+    <property name="title" translatable="yes">Extract Text From URL</property>
     <child>
       <object class="AdwToolbarView">
         <property name="content">
@@ -32,7 +32,7 @@
               <object class="GtkLabel">
                 <property name="focus-on-click">False</property>
                 <property name="hexpand">True</property>
-                <property name="label">Paste Image URL to Extract Text</property>
+                <property name="label" translatable="yes">Paste Image URL to Extract Text</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="row">6</property>
@@ -44,7 +44,7 @@
                 <property name="focus-on-click">False</property>
                 <property name="halign">center</property>
                 <property name="justify">center</property>
-                <property name="label">Link must point directly to
+                <property name="label" translatable="yes" comments="Provide new line character, as given in original string">Link must point directly to
 an image file (e.g., JPEG, PNG, GIF)</property>
                 <property name="width-request">-1</property>
                 <layout>
@@ -58,7 +58,7 @@ an image file (e.g., JPEG, PNG, GIF)</property>
                 <property name="focus-on-click">False</property>
                 <property name="halign">center</property>
                 <property name="justify">center</property>
-                <property name="label">You can also just paste URL on main screen to.
+                <property name="label" translatable="yes">You can also just paste URL on main screen to.
 </property>
                 <property name="wrap">False</property>
                 <layout>
@@ -79,7 +79,7 @@ an image file (e.g., JPEG, PNG, GIF)</property>
             </child>
             <child>
               <object class="GtkButton">
-                <property name="label">Extract Text</property>
+                <property name="label" translatable="yes">Extract Text</property>
                 <signal name="clicked" handler="on_extract_text_from_url_button_clicked"/>
                 <layout>
                   <property name="column">0</property>
