@@ -20,26 +20,26 @@
             <property name="vexpand">True</property>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title">Miscellaneous</property>
+                <property name="title" translatable="yes">Miscellaneous</property>
                 <child>
                   <object class="AdwSwitchRow" id="switch_auto_copy">
                     <property name="icon-name">edit-copy</property>
-                    <property name="subtitle">Automatically Copy output extracted text to the Clipboard </property>
-                    <property name="title">AutoCopy Result to Clipboard</property>
+                    <property name="subtitle" translatable="yes">Automatically Copy output extracted text to the Clipboard </property>
+                    <property name="title" translatable="yes">AutoCopy Result to Clipboard</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="switch_save_screenshot">
                     <property name="icon-name">image-x-generic-symbolic</property>
-                    <property name="subtitle">Save the captured screenshots</property>
-                    <property name="title">Save Screenshot</property>
+                    <property name="subtitle" translatable="yes">Save the captured screenshots</property>
+                    <property name="title" translatable="yes">Save Screenshot</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwButtonRow">
                     <property name="action-name">app.about</property>
                     <property name="start-icon-name">help-about</property>
-                    <property name="title">About</property>
+                    <property name="title" translatable="yes">About</property>
                   </object>
                 </child>
               </object>
