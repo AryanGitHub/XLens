@@ -18,18 +18,18 @@ DEFAULT_CONFIGS = {
 
 class ConfigManager:
     def __init__(self, config_path: str):
-        self.config_path = config_path
-        self.configs = self._load()
+        self.config_path: str = config_path
+        self.configs: dict = self._load()
         logger.info("Config Manager loaded")
 
-    def _load(self):
+    def _load(self) -> dict:
         if not os.path.exists(self.config_path):
             logger.info("Configs json file Do not Exist, backing to default configs")
             return DEFAULT_CONFIGS
         with open(self.config_path) as file:
             return json.load(file)
 
-    def get(self, key: str):
+    def get(self, key: str) -> str:
         logger.debug(f"Getting key {key} from config.")
         if self.isValidKey(key):
             if key in self.configs:
@@ -42,14 +42,14 @@ class ConfigManager:
             logger.critical("config key not found")
             return None
 
-    def isValidKey(self, key: str):
+    def isValidKey(self, key: str) -> bool:
         if key in DEFAULT_CONFIGS:
             return True
         else:
             logger.error("Not a Valid Key to Set")
             return False
 
-    def set(self, key: str, value):
+    def set(self, key: str, value) -> None:
         logger.debug(f"Setting key {key} from config to value {value}.")
         if self.isValidKey(key):
             if self.configs.get(key) != None:
@@ -60,7 +60,7 @@ class ConfigManager:
                 self.configs[key] = value
                 self.save()
 
-    def save(self):
+    def save(self) -> None:
         try:
             with open(self.config_path, "w") as json_file:
                 json.dump(self.configs, json_file, indent=4)
