@@ -1,7 +1,9 @@
+import json
 import logging.config
-import pathlib, json
+
 from gi.repository import Gio
-from .constants import loggingConfigPath, app_id
+
+from .constants import app_id
 
 
 def configure_app_logging():
