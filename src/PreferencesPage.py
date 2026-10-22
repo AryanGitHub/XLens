@@ -9,6 +9,10 @@ from . import appLogger
 
 logger = appLogger.getLogger(__name__)
 
+import gettext
+
+_ = gettext.gettext
+
 
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/PreferencesPage.ui")
 class PreferencesPage(Adw.NavigationPage):
@@ -20,7 +24,7 @@ class PreferencesPage(Adw.NavigationPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.set_title("XLens - Preferences")
+        self.set_title("XLens - " + _("Preferences"))
         logger.info(f"Settings Window Initialized")
         self._load_switch_auto_copy()
         self._connect_switch_auto_copy()
