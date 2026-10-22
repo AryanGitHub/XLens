@@ -1,4 +1,6 @@
-import os, json
+import json
+import os
+
 from . import appLogger
 
 logger = appLogger.getLogger(__name__)
