@@ -3,7 +3,7 @@
 > [NOTE]
 > Development happens on [Gnome GitLab](https://gitlab.gnome.org/Oumuamua/xlens). If you are viewing this on GitHub, please treat this as a read-only mirror and submit all issues and merge requests to the GitLab repository.
 
-A native Optical Character Recognition (OCR) application for the GNOME desktop, built with **GTK4** and **Libadwaita**. 
+A native Optical Character Recognition (OCR) application for the GNOME desktop, built with **GTK4** and **Libadwaita**.
 
 Extract text from images and scanned documents seamlessly with a modern, adaptive user interface.
 
@@ -14,6 +14,6 @@ Extract text from images and scanned documents seamlessly with a modern, adaptiv
 
 ## Building
 
-XLens can be built and run using standard GNOME build tools (Meson/Ninja) or packaged via Flatpak (Planned). 
+XLens can be built and run using standard GNOME build tools (Meson/Ninja) or packaged via Flatpak (Planned).
 
 *(Note: Detailed installation instructions, dependencies, and contribution guidelines will be added as the project grows!)*

@@ -10,5 +10,5 @@ extend-include = ["*.in"]
 
 ignore = [
     "UP032", # Due to translatable strings cannot use f strings.  Read More at : https://docs.astral.sh/ruff/rules/f-string/#f-string-up032
-    
+
 ]
