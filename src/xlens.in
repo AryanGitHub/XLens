@@ -25,7 +25,7 @@ import signal
 import locale
 import gettext
 
-VERSION = '@VERSION@'
+VERSION = '<VCS_TAG>'
 pkgdatadir = '@pkgdatadir@'
 localedir = '@localedir@'
 

@@ -17,10 +17,19 @@ conf.set('VERSION', meson.project_version())
 conf.set('localedir', get_option('prefix') / get_option('localedir'))
 conf.set('pkgdatadir', pkgdatadir)
 
-configure_file(
+
+intermediate_xlens = configure_file(
   input: 'xlens.in',
+  output: 'xlens.tmp', # Temporary file name
+  configuration: conf
+)
+
+vcs_tag(
+  input: intermediate_xlens,
   output: 'xlens',
-  configuration: conf,
+  replace_string: '<VCS_TAG>',
+  command: ['git', 'describe', '--tags', '--always', '--dirty'],
+  fallback: meson.project_version(),
   install: true,
   install_dir: get_option('bindir'),
   install_mode: 'rwxr-xr-x'
