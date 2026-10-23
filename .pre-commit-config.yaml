@@ -1,0 +1,20 @@
+repos:
+  # 1. Standard File & XML Cleanup
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-json
+      # Crucial for GTK: validates the syntax of .ui and .gresource.xml files
+      - id: check-xml
+      - id: check-added-large-files
+      # For Python
+      - id: check-ast
+
+  # 2. Python Linting & Formatting (Ruff)
+  # Ruff is extremely fast and replaces Flake8, Black, and isort.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.2
+    hooks:
+      - id: ruff-format
