@@ -45,7 +45,8 @@ xlens_sources = [
   'ImageProcessingContext.py',
   'OutputViewer.py',
   'PreferencesPage.py',
-  'FromURLPage.py'
+  'FromURLPage.py',
+  'app_utils.py'
 ]
 
 install_data(xlens_sources, install_dir: moduledir)

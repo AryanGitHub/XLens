@@ -28,12 +28,11 @@ gi.require_version("Xdp", "1.0")
 gi.require_version("XdpGtk4", "1.0")
 
 import asyncio
-from collections.abc import Callable
 
 from gi.events import GLibEventLoopPolicy
 from gi.repository import Adw, Gio
 
-from . import appLogger
+from . import app_utils, appLogger
 from .window import XlensMainWindow
 
 appLogger.configure_app_logging()
@@ -53,14 +52,9 @@ class XlensApplication(Adw.Application):
         logger.info("App started.")
         logger.info(f"Application_id={self.get_application_id()}")
         logger.info(f"Application version : {self.version}")
-        self.create_action("quit", lambda *_: self.quit(), ["<control>q"])
-        self.create_action("about", self.on_about_action)
-        self.create_action("preferences", self.on_preferences_action)
-
-        self.set_accels_for_action("win.open", ["<Ctrl>o"])
-        logger.debug("Setting Ctrl+O to action 'open'")
-        self.set_accels_for_action("win.paste", ["<Ctrl>v"])
-        logger.debug("Setting Ctrl+P to action 'paste'")
+        app_utils.create_action(self, "quit", lambda *_: self.quit(), ["<control>q"])
+        app_utils.create_action(self, "about", self.on_about_action)
+        app_utils.create_action(self, "preferences", self.on_preferences_action)
 
     def do_activate(self) -> None:
         """Called when the application is activated.
@@ -91,23 +85,6 @@ class XlensApplication(Adw.Application):
     def on_preferences_action(self, widget, _) -> None:
         """Callback for the app.preferences action."""
         print("app.preferences action activated")
-
-    def create_action(
-        self, name: str, callback: Callable[..., None], shortcuts=None
-    ) -> None:
-        """Add an application action.
-
-        Args:
-            name: the name of the action
-            callback: the function to be called when the action is
-              activated
-            shortcuts: an optional list of accelerators
-        """
-        action = Gio.SimpleAction.new(name, None)
-        action.connect("activate", callback)
-        self.add_action(action)
-        if shortcuts:
-            self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
 def main(version: str):

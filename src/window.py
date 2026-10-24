@@ -21,7 +21,7 @@ from collections.abc import Callable
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Xdp, XdpGtk4
 
-from . import appLogger
+from . import app_utils, appLogger
 from .constants import toast_timeout
 from .FromURLPage import FromURLPage
 from .ImageProcessingContext import ImageProcessingContext as IPC
@@ -50,18 +50,16 @@ class XlensMainWindow(Adw.ApplicationWindow):
             f"Currently displayed Navigation Page is '{self.app_nav_view.get_visible_page().get_tag()}'"
         )
 
-        open_action = Gio.SimpleAction(name="open")
-        open_action.connect("activate", self.open_file_dialog)
-        self.add_action(open_action)
-        logger.info(
-            f"Added action '{open_action.get_name()}' and connected to function '{self.open_file_dialog.__name__}'"
+        app_utils.create_action(
+            self, "open", self.open_file_dialog, ["<Ctrl>o"], self.get_application()
         )
 
-        paste_action = Gio.SimpleAction(name="paste")
-        paste_action.connect("activate", self.start_paste_procedure)
-        self.add_action(paste_action)
-        logger.info(
-            f"Added action '{paste_action.get_name()}' and connected to function '{self.start_paste_procedure.__name__}'"
+        app_utils.create_action(
+            self,
+            "paste",
+            self.start_paste_procedure,
+            ["<Ctrl>v"],
+            self.get_application(),
         )
 
         self.connect("close-request", self.on_close_request)
