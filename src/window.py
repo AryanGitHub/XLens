@@ -99,7 +99,8 @@ class XlensMainWindow(Adw.ApplicationWindow):
                     logger.info(f"File Selected. {file}")
                     open_file(file)
             except GLib.Error as err:
-                self.getErrorCallbackGenerateToastFunction()("User Cancelled")
+                if err.code == Gtk.DialogError.DISMISSED:
+                    self.getErrorCallbackGenerateToastFunction()("User Cancelled")
                 logger.error(f"Gtk File Dialog Error: {err!s}")
 
         def open_file(file: Gio.File) -> None:
