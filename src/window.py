@@ -91,12 +91,16 @@ class XlensMainWindow(Adw.ApplicationWindow):
         logger.info("Open Action Started.")
 
         def on_open_response(dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
-            file: Gio.File | None = dialog.open_finish(result)
-            # If the user selected a file...
-            if file is not None:
-                # ... open it
-                logger.info(f"File Selected. {file}")
-                open_file(file)
+            try:
+                file: Gio.File | None = dialog.open_finish(result)
+                # If the user selected a file...
+                if file is not None:
+                    # ... open it
+                    logger.info(f"File Selected. {file}")
+                    open_file(file)
+            except GLib.Error as err:
+                self.getErrorCallbackGenerateToastFunction()("User Cancelled")
+                logger.error(f"Gtk File Dialog Error: {err!s}")
 
         def open_file(file: Gio.File) -> None:
             file_path = file.peek_path()
