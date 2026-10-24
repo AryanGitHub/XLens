@@ -170,12 +170,12 @@ document</property>
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="take_screenshot_button">
+                                    <property name="action-name">win.take_screenshot</property>
                                     <property name="css-classes">suggested-action
 pill
 document</property>
                                     <property name="hexpand">True</property>
                                     <property name="valign">center</property>
-                                    <signal name="clicked" handler="take_screenshot_button_clicked"/>
                                     <child>
                                       <object class="GtkBox">
                                         <property name="baseline-position">bottom</property>

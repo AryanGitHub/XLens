@@ -62,6 +62,14 @@ class XlensMainWindow(Adw.ApplicationWindow):
             self.get_application(),
         )
 
+        app_utils.create_action(
+            self,
+            "take_screenshot",
+            self.start_take_screenshot_procedure,
+            ["<Alt>x"],
+            self.get_application(),
+        )
+
         self.connect("close-request", self.on_close_request)
 
         self.restrict_actions_to_main_page()
@@ -184,8 +192,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
         logger.info("Preferences button clicked.")
         self.app_nav_view.push_by_tag("preferences_page")
 
-    @Gtk.Template.Callback()
-    def take_screenshot_button_clicked(self, button) -> None:
+    def start_take_screenshot_procedure(self, action, parameter) -> None:
         logger.debug("take screenshot button clicked")
 
         def take_screenshot_callback_function(portal, result, user_data) -> None:
