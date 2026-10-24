@@ -113,8 +113,24 @@ class XlensMainWindow(Adw.ApplicationWindow):
                 self.get_application(),
             )
 
-        # Create a new file selection dialog, using the "open" mode
+        filters = Gio.ListStore.new(Gtk.FileFilter)
+
+        # Now Create filters for dialog box
+        image_filter = Gtk.FileFilter()
+        image_filter.set_name("Images")
+        image_filter.add_mime_type("image/*")
+        filters.append(image_filter)
+
+        all_filter = Gtk.FileFilter()
+        all_filter.set_name("All files")
+        all_filter.add_pattern("*")
+        filters.append(all_filter)
+
         native = Gtk.FileDialog()
+        native.set_filters(filters)
+        native.set_default_filter(image_filter)
+
+        # Create a new file selection dialog, using the "open" mode
         native.open(self, None, on_open_response)
         logger.info("Gtk File Dialog Opened")
 
