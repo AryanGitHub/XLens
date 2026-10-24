@@ -18,8 +18,8 @@
             <child>
               <object class="GtkImage">
                 <property name="halign">center</property>
-                <property name="icon-name">preferences-system-search</property>
-                <property name="pixel-size">200</property>
+                <property name="icon-name">input-keyboard</property>
+                <property name="pixel-size">170</property>
                 <property name="valign">center</property>
                 <layout>
                   <property name="column">0</property>
@@ -30,9 +30,12 @@
             </child>
             <child>
               <object class="GtkLabel">
+                <property name="css-classes">title-1
+accent</property>
                 <property name="focus-on-click">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Paste Image URL to Extract Text</property>
+                <property name="label" translatable="yes">Paste Image URL
+  to Extract Text</property>
                 <layout>
                   <property name="column">0</property>
                   <property name="row">6</property>
@@ -41,6 +44,7 @@
             </child>
             <child>
               <object class="GtkLabel">
+                <property name="css-classes">warning</property>
                 <property name="focus-on-click">False</property>
                 <property name="halign">center</property>
                 <property name="justify">center</property>
@@ -54,13 +58,32 @@ an image file (e.g., JPEG, PNG, GIF)</property>
               </object>
             </child>
             <child>
-              <object class="GtkLabel">
-                <property name="focus-on-click">False</property>
-                <property name="halign">center</property>
-                <property name="justify">center</property>
-                <property name="label" translatable="yes">You can also just paste URL on main screen to.
-</property>
-                <property name="wrap">False</property>
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkImage">
+                    <property name="css-classes">dimmed</property>
+                    <property name="icon-name">dialog-information</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="can-focus">False</property>
+                    <property name="can-target">False</property>
+                    <property name="focus-on-click">False</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="css-classes">dim-label</property>
+                    <property name="focus-on-click">False</property>
+                    <property name="halign">center</property>
+                    <property name="justify">center</property>
+                    <property name="label" translatable="yes">Tip: You don't need this screen! Just press
+Ctrl+V to paste your link on the main page.</property>
+                    <property name="wrap">True</property>
+                  </object>
+                </child>
                 <layout>
                   <property name="column">0</property>
                   <property name="row">8</property>
@@ -69,6 +92,8 @@ an image file (e.g., JPEG, PNG, GIF)</property>
             </child>
             <child>
               <object class="GtkSearchEntry" id="URL_entry">
+                <property name="css-classes">toolbar
+accent</property>
                 <property name="hexpand">True</property>
                 <property name="placeholder-text">https://example.org/image.png</property>
                 <layout>
@@ -79,6 +104,8 @@ an image file (e.g., JPEG, PNG, GIF)</property>
             </child>
             <child>
               <object class="GtkButton">
+                <property name="css-classes">suggested-action
+pill</property>
                 <property name="label" translatable="yes">Extract Text</property>
                 <signal name="clicked" handler="on_extract_text_from_url_button_clicked"/>
                 <layout>
