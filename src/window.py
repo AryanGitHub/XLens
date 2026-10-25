@@ -19,7 +19,7 @@
 
 from collections.abc import Callable
 
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Xdp, XdpGtk4
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Xdp, XdpGtk4  # type: ignore
 
 from . import app_utils, appLogger
 from .constants import toast_timeout
@@ -145,20 +145,76 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
         logger.debug("started paste action")
 
-        from io import BytesIO
-
-        from PIL import Image
-
-        # 1. Get the clipboard from the default display
+        # Get the clipboard from the default display
         clipboard = Gdk.Display.get_default().get_clipboard()
+        formats = clipboard.get_formats()
 
-        # 3. This callback runs when the clipboard data is ready
-        def on_paste_image(clipboard, result) -> None:
+        # Check for Text
+        if formats.contain_gtype(GObject.TYPE_STRING):
+            logger.info("Clipboard contains text.")
+
+            def on_paste_URL(clipboard, result) -> None:
+                try:
+                    image_url_string = clipboard.read_text_finish(result)
+                    logger.debug(f"clipboard text is: {image_url_string}")
+                except GLib.Error as e:
+                    logger.info(f"GTK failed to read clipboard URL: {e}")
+                    self.getErrorCallbackGenerateToastFunction()(
+                        "Error reading clipboard Text"
+                    )
+                    return
+
+                if image_url_string is None:
+                    logger.info("No URL found on the clipboard.")
+                    self.getErrorCallbackGenerateToastFunction()(
+                        "No URL found on clipboard"
+                    )
+                    return
+
+                sourceType = IPC.ImageInputSourceType.URL
+                IPC.getOutput(
+                    sourceType,
+                    image_url_string,
+                    self.getErrorCallbackGenerateToastFunction(),
+                    self.get_application(),
+                )
+
             try:
-                # Retrieve the Gdk.Texture from the async result
-                texture = clipboard.read_texture_finish(result)
+                clipboard.read_text_async(None, on_paste_URL)
+            except (TypeError, ValueError) as e:
+                logger.error(f"Invalid arguments passed to clipboard read: {e}")
+                self.getErrorCallbackGenerateToastFunction()(
+                    "Internal error reading clipboard data"
+                )
 
-                if texture is not None:
+        # Check for Image/Texture
+        elif formats.contain_gtype(Gdk.Texture.__gtype__):
+            logger.info("Clipboard contains an image.")
+
+            # This callback runs when the clipboard Image data is ready
+            def on_paste_image(clipboard, result) -> None:
+                from io import BytesIO
+
+                from PIL import Image, UnidentifiedImageError
+
+                try:
+                    # Retrieve the Gdk.Texture from the async result
+                    texture = clipboard.read_texture_finish(result)
+                except GLib.Error as e:
+                    logger.info(f"GTK failed to read clipboard texture: {e}")
+                    self.getErrorCallbackGenerateToastFunction()(
+                        "Error reading Image From clipboard"
+                    )
+                    return
+
+                if texture is None:
+                    logger.info("No image data found on the clipboard.")
+                    self.getErrorCallbackGenerateToastFunction()(
+                        "No image found on clipboard"
+                    )
+                    return
+
+                try:
                     # Convert the texture to a GLib.Bytes object containing PNG data
                     gbytes = texture.save_to_png_bytes()
 
@@ -174,18 +230,34 @@ class XlensMainWindow(Adw.ApplicationWindow):
                         self.getErrorCallbackGenerateToastFunction(),
                         self.get_application(),
                     )
+                except UnidentifiedImageError as e:
+                    logger.error(
+                        f"Clipboard data is not a recognizable image format: {e}"
+                    )
+                    self.getErrorCallbackGenerateToastFunction()(
+                        "Invalid image format on clipboard"
+                    )
+                except ValueError as e:
+                    logger.error(f"Value error while processing image bytes: {e}")
+                    self.getErrorCallbackGenerateToastFunction()("Corrupted image data")
 
-                else:
-                    logger.info("No image data found on the clipboard.")
-                    raise Exception("No image data found on the clipboard")
+            try:
+                # Request the image asynchronously
+                # (Passing 'None' for the cancellable, and our callback function)
+                clipboard.read_texture_async(None, on_paste_image)
 
-            except Exception as e:
-                logger.info(f"Error reading clipboard: {e}")
-                self.getErrorCallbackGenerateToastFunction()("Error reading clipboard")
+            except (TypeError, ValueError) as e:
+                logger.error(f"Invalid arguments passed to clipboard read: {e}")
+                self.getErrorCallbackGenerateToastFunction()(
+                    "Internal error reading Image clipboard data"
+                )
 
-        # 2. Request the image asynchronously
-        # (Passing 'None' for the cancellable, and our callback function)
-        clipboard.read_texture_async(None, on_paste_image)
+        else:
+            logger.info("Clipboard is empty or contains an unsupported format.")
+            self.getErrorCallbackGenerateToastFunction()(
+                "Clipboard has unsupported format or Empty."
+            )
+            return
 
     @Gtk.Template.Callback()
     def menu_button_clicked(self, button) -> None:
