@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from enum import Enum
 
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 from PIL import Image
 
 from . import appLogger
@@ -173,6 +173,10 @@ class ImageProcessingContext:
             try:
                 ipc.getText()
                 ipc.setOutputWindowPresent()
+                if ConfigManager.get_boolean("auto-copy-output-text"):
+                    logger.debug("Setting output text to clipboard.")
+                    clipboard = Gdk.Display.get_default().get_clipboard()
+                    clipboard.set(ipc.outputText)
                 return True
             except ImageProcessingException as ipe:
                 logger.info("Error Callback Function called.")
