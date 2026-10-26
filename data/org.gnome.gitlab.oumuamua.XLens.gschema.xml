@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="xlens">
+
+  <enum id="org.gnome.gitlab.oumuamua.XLens.image.processing.module">
+    <value nick="Tesseract_4" value="0"/>
+  </enum>
+
+
 	<schema id="org.gnome.gitlab.oumuamua.XLens" path="/org/gnome/gitlab/oumuamua/XLens/">
+
+		<key name="auto-copy-output-text" type="b">
+			<default>false</default>
+			<summary>Automatic Text Copy</summary>
+			<description>Whether the application automatically save the text to clipboard.</description>
+		</key>
+
+		<key name="save-screenshot-images" type="b">
+			<default>false</default>
+			<summary>Save screenshot Images</summary>
+			<description>Whether the application save the taken screenshots.</description>
+		</key>
+
+		<key name="view-image-in-output" type="b">
+			<default>false</default>
+			<summary>Display Image in Output Screen</summary>
+			<description>Whether the application to display the Input Image in Output Screen.</description>
+		</key>
+
+		<key name="image-processing-module" enum="org.gnome.gitlab.oumuamua.XLens.image.processing.module">
+			<default>'Tesseract_4'</default>
+			<summary>Module to process Images</summary>
+			<description>Which backend OCR should be used to process the Images, to extract text.</description>
+		</key>
+
+
 	</schema>
 </schemalist>

@@ -2,11 +2,10 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from . import appLogger
 from .ConfigManager import ConfigManager
-from .constants import configPath
 
 logger = appLogger.getLogger(__name__)
 
@@ -18,7 +17,6 @@ _ = gettext.gettext
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/PreferencesPage.ui")
 class PreferencesPage(Adw.NavigationPage):
     __gtype_name__ = "PreferencesPage"
-    configManager = ConfigManager(configPath)
 
     switch_auto_copy = Gtk.Template.Child()
     switch_save_screenshot = Gtk.Template.Child()
@@ -27,17 +25,21 @@ class PreferencesPage(Adw.NavigationPage):
         super().__init__(**kwargs)
         self.set_title("XLens - " + _("Preferences"))
         logger.info("Settings Window Initialized")
-        self._load_switch_auto_copy()
-        self._connect_switch_auto_copy()
+        self._bind_switch_auto_copy()
+        self._bind_switch_save_screenshot()
 
-    def _load_switch_auto_copy(self) -> None:
-        value: str = self.configManager.get("Enable_Save_Images")
-        self.switch_auto_copy.set_active(value)
-        logger.debug(f"Loaded Settings 'switch_auto_copy' to '{value}'")
+    def _bind_switch_auto_copy(self) -> None:
+        ConfigManager.bind(
+            "auto-copy-output-text",
+            self.switch_auto_copy,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
 
-    def _connect_switch_auto_copy(self) -> None:
-        def callback(switch_row: Gtk.Switch, pspec):
-            is_active = switch_row.props.active
-            self.configManager.set("Enable_Save_Images", is_active)
-
-        self.switch_auto_copy.connect("notify::active", callback)
+    def _bind_switch_save_screenshot(self) -> None:
+        ConfigManager.bind(
+            "save-screenshot-images",
+            self.switch_save_screenshot,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )

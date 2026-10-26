@@ -5,8 +5,6 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk
 
 from . import appLogger
-from .ConfigManager import ConfigManager
-from .constants import configPath
 from .ImageProcessingContext import ImageProcessingContext as IPC
 
 logger = appLogger.getLogger(__name__)
@@ -19,7 +17,6 @@ _ = gettext.gettext
 @Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/FromURLPage.ui")
 class FromURLPage(Adw.NavigationPage):
     __gtype_name__ = "FromURLPage"
-    configManager = ConfigManager(configPath)
 
     URL_entry = Gtk.Template.Child()
 

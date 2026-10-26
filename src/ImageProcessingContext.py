@@ -4,7 +4,8 @@ from enum import Enum
 from gi.repository import Gtk
 from PIL import Image
 
-from . import ConfigManager, appLogger
+from . import appLogger
+from .ConfigManager import ConfigManager
 from .constants import configPath
 from .OutputViewer import OutputViewerWindow as OVW
 
@@ -29,7 +30,6 @@ class ImageProcessingContext:
         self.image: Image | None = None
         self.outputText: str | None = None
         self.errorStatus = None
-        self.config_manager = ConfigManager.ConfigManager(path)
         self.application: Gtk.Application = application
         logger.debug(f"ImageProcessingContext initialized. {self}")
 
@@ -41,10 +41,10 @@ class ImageProcessingContext:
 
         elif not self.outputText:
             logger.info(
-                f"Current Image Processing Module going to be used is: {self.config_manager.get('Image_Processing_Module')}"
+                f"Current Image Processing Module going to be used is: {ConfigManager.get_string('image-processing-module')}"
             )
             try:
-                match self.config_manager.get("Image_Processing_Module"):
+                match ConfigManager.get_string("image-processing-module"):
                     case "Tesseract_4":
                         self.outputText = self.getTextFromTesseract4()
                     # case "EasyOCR_version": #dream case
@@ -62,11 +62,11 @@ class ImageProcessingContext:
                 else:
                     raise ImageProcessingException("No Text To Extract")
 
-                if (self.outputText is not None) and not self.config_manager.get(
-                    "Enable_View_Image_In_Output"
+                if (self.outputText is not None) and not ConfigManager.get_boolean(
+                    "view-image-in-output"
                 ):
                     logger.debug(
-                        "Image already Processed, and 'Enable_View_Image_In_Output' is False, so the Image is not required further, hence releasing the memory."
+                        "Image already Processed, and 'view-image-in-output' is False, so the Image is not required further, hence releasing the memory."
                     )
                     self.image = None
 
