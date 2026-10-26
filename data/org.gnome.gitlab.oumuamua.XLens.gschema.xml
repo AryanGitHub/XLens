@@ -14,10 +14,10 @@
 			<description>Whether the application automatically save the text to clipboard.</description>
 		</key>
 
-		<key name="save-screenshot-images" type="b">
+		<key name="delete-taken-screenshot-image" type="b">
 			<default>false</default>
-			<summary>Save screenshot Images</summary>
-			<description>Whether the application save the taken screenshots.</description>
+			<summary>Delete taken screenshot Image</summary>
+			<description>Whether the application delete the taken screenshot.</description>
 		</key>
 
 		<key name="view-image-in-output" type="b">

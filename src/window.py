@@ -22,6 +22,7 @@ from collections.abc import Callable
 from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Xdp, XdpGtk4  # type: ignore
 
 from . import app_utils, appLogger
+from .ConfigManager import ConfigManager
 from .constants import toast_timeout
 from .FromURLPage import FromURLPage
 from .ImageProcessingContext import ImageProcessingContext as IPC
@@ -270,11 +271,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
         def take_screenshot_callback_function(portal, result, user_data) -> None:
             try:
                 image_uri = portal.take_screenshot_finish(result)
-
                 logger.info(
                     f"Screenshot successfully saved by the system to: {image_uri}"
                 )
-
+            except GLib.Error as e:
+                logger.error(f"Screenshot canceled or failed: {e.message}")
+            else:
                 sourceType = IPC.ImageInputSourceType.URL
                 IPC.getOutput(
                     sourceType,
@@ -282,9 +284,15 @@ class XlensMainWindow(Adw.ApplicationWindow):
                     self.getErrorCallbackGenerateToastFunction(),
                     self.get_application(),
                 )
-
-            except GLib.Error as e:
-                logger.error(f"Screenshot canceled or failed: {e.message}")
+                try:
+                    if ConfigManager.get_boolean("delete-taken-screenshot-image"):
+                        file = Gio.File.new_for_uri(image_uri)
+                        file.delete(None)
+                        logger.debug(
+                            f"Cleaned up temporary screenshot at: {file.get_path()}"
+                        )
+                except GLib.Error as e:
+                    logger.error(f"Failed to delete screenshot file: {e.message}")
 
         try:
             parent = XdpGtk4.parent_new_gtk(self)

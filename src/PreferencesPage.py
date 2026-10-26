@@ -38,8 +38,8 @@ class PreferencesPage(Adw.NavigationPage):
 
     def _bind_switch_save_screenshot(self) -> None:
         ConfigManager.bind(
-            "save-screenshot-images",
+            "delete-taken-screenshot-image",
             self.switch_save_screenshot,
             "active",
-            Gio.SettingsBindFlags.DEFAULT,
+            Gio.SettingsBindFlags.DEFAULT | Gio.SettingsBindFlags.INVERT_BOOLEAN,
         )
