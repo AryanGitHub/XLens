@@ -89,7 +89,9 @@ class XlensApplication(Adw.Application):
 
 def main(version: str):
     """The application's entry point."""
+    # --- AI-assisted (modified) start ---
     asyncio.set_event_loop_policy(GLibEventLoopPolicy())
+    # --- AI-assisted (modified) end ---
 
     app = XlensApplication(version)
     return app.run(sys.argv)

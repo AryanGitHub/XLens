@@ -97,6 +97,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
     def open_file_dialog(self, action, parameter) -> None:
         logger.info("Open Action Started.")
 
+        # --- AI-assisted (modified) start ---
         def on_open_response(dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
             try:
                 file: Gio.File | None = dialog.open_finish(result)
@@ -107,11 +108,14 @@ class XlensMainWindow(Adw.ApplicationWindow):
                     open_file(file)
             except GLib.Error as err:
                 if err.code == Gtk.DialogError.DISMISSED:
+                    # --- AI-assisted (modified) end ---
                     self.getErrorCallbackGenerateToastFunction()("User Cancelled")
                 logger.error(f"Gtk File Dialog Error: {err!s}")
 
+        # --- AI-assisted (modified) start ---
         def open_file(file: Gio.File) -> None:
             file_path = file.peek_path()
+            # --- AI-assisted (modified) end ---
             logger.info(f"file path = {file_path}")
             sourceType = IPC.ImageInputSourceType.FILE_PATH
             IPC.getOutput(
@@ -123,6 +127,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
         filters = Gio.ListStore.new(Gtk.FileFilter)
 
+        # --- AI-assisted (modified) start ---
         # Now Create filters for dialog box
         image_filter = Gtk.FileFilter()
         image_filter.set_name("Images")
@@ -142,16 +147,22 @@ class XlensMainWindow(Adw.ApplicationWindow):
         native.open(self, None, on_open_response)
         logger.info("Gtk File Dialog Opened")
 
+    # --- AI-assisted (modified) end ---
+
     def start_paste_procedure(self, action, parameter) -> None:
 
         logger.debug("started paste action")
 
+        # --- AI-assisted (modified) start ---
         # Get the clipboard from the default display
         clipboard = Gdk.Display.get_default().get_clipboard()
         formats = clipboard.get_formats()
+        # --- AI-assisted (modified) end ---
 
+        # --- AI-assisted (modified) start ---
         # Check for Text
         if formats.contain_gtype(GObject.TYPE_STRING):
+            # --- AI-assisted (modified) end ---
             logger.info("Clipboard contains text.")
 
             def on_paste_URL(clipboard, result) -> None:
@@ -180,6 +191,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                     self.get_application(),
                 )
 
+            # --- AI-assisted (modified) start ---
             try:
                 clipboard.read_text_async(None, on_paste_URL)
             except (TypeError, ValueError) as e:
@@ -187,9 +199,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
                 self.getErrorCallbackGenerateToastFunction()(
                     "Internal error reading clipboard data"
                 )
+        # --- AI-assisted (modified) end ---
 
+        # --- AI-assisted (modified) start ---
         # Check for Image/Texture
         elif formats.contain_gtype(Gdk.Texture.__gtype__):
+            # --- AI-assisted (modified) end ---
             logger.info("Clipboard contains an image.")
 
             # This callback runs when the clipboard Image data is ready
@@ -198,10 +213,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
                 from PIL import Image, UnidentifiedImageError
 
+                # --- AI-assisted (modified) start ---
                 try:
                     # Retrieve the Gdk.Texture from the async result
                     texture = clipboard.read_texture_finish(result)
                 except GLib.Error as e:
+                    # --- AI-assisted (modified) end ---
                     logger.info(f"GTK failed to read clipboard texture: {e}")
                     self.getErrorCallbackGenerateToastFunction()(
                         "Error reading Image From clipboard"
@@ -231,6 +248,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                         self.getErrorCallbackGenerateToastFunction(),
                         self.get_application(),
                     )
+                # --- AI-assisted (modified) start ---
                 except UnidentifiedImageError as e:
                     logger.error(
                         f"Clipboard data is not a recognizable image format: {e}"
@@ -242,16 +260,20 @@ class XlensMainWindow(Adw.ApplicationWindow):
                     logger.error(f"Value error while processing image bytes: {e}")
                     self.getErrorCallbackGenerateToastFunction()("Corrupted image data")
 
+            # --- AI-assisted (modified) end ---
+
             try:
                 # Request the image asynchronously
                 # (Passing 'None' for the cancellable, and our callback function)
                 clipboard.read_texture_async(None, on_paste_image)
 
+            # --- AI-assisted (modified) start ---
             except (TypeError, ValueError) as e:
                 logger.error(f"Invalid arguments passed to clipboard read: {e}")
                 self.getErrorCallbackGenerateToastFunction()(
                     "Internal error reading Image clipboard data"
                 )
+        # --- AI-assisted (modified) end ---
 
         else:
             logger.info("Clipboard is empty or contains an unsupported format.")
@@ -270,12 +292,16 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
         def take_screenshot_callback_function(portal, result, user_data) -> None:
             try:
+                # --- AI-assisted (modified) start ---
                 image_uri = portal.take_screenshot_finish(result)
+                # --- AI-assisted (modified) end ---
                 logger.info(
                     f"Screenshot successfully saved by the system to: {image_uri}"
                 )
+            # --- AI-assisted (modified) start ---
             except GLib.Error as e:
                 logger.error(f"Screenshot canceled or failed: {e.message}")
+            # --- AI-assisted (modified) end ---
             else:
                 sourceType = IPC.ImageInputSourceType.URL
                 IPC.getOutput(
@@ -319,6 +345,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
             paste_action = window.lookup_action("paste")
             open_action = window.lookup_action("open")
 
+            # --- AI-assisted (modified) start ---
             if not paste_action or not current_page:
                 return
             if current_page.get_tag() == "main_page":
@@ -329,6 +356,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                 open_action.set_enabled(False)
 
         self.app_nav_view.connect("notify::visible-page", on_visible_page_changed, self)
+        # --- AI-assisted (modified) end ---
         logger.info(
             "Successfully, put the restrictions of actions to only work on main page."
         )
