@@ -1,10 +1,15 @@
+import gi
+
+gi.require_version("Gdk", "4.0")
+import asyncio
 from collections.abc import Callable
+from concurrent.futures import ProcessPoolExecutor
 from enum import Enum
 
 from gi.repository import Gdk, Gtk
 from PIL import Image
 
-from . import appLogger
+from . import TextExtractor, appLogger
 from .ConfigManager import ConfigManager
 from .constants import configPath
 from .OutputViewer import OutputViewerWindow as OVW
@@ -13,10 +18,6 @@ logger = appLogger.getLogger(__name__)
 
 
 class SetImageException(Exception):
-    pass
-
-
-class ImageProcessingException(Exception):
     pass
 
 
@@ -33,26 +34,33 @@ class ImageProcessingContext:
         self.application: Gtk.Application = application
         logger.debug(f"ImageProcessingContext initialized. {self}")
 
-    def getText(self) -> str:
+    async def getText(self) -> str:
         logger.debug("getText method called.")
         if not self.image:
             logger.error("self.image is None, cannot Proceed further to extract text.")
-            raise ImageProcessingException("Image Not Found")
+            raise TextExtractor.ImageProcessingException("Image Not Found")
 
         elif not self.outputText:
             logger.info(
                 f"Current Image Processing Module going to be used is: {ConfigManager.get_string('image-processing-module')}"
             )
             try:
+                task = None
                 match ConfigManager.get_string("image-processing-module"):
                     case "Tesseract_4":
-                        self.outputText = self.getTextFromTesseract4()
-                    # case "EasyOCR_version": #dream case
-                    #    self.outputText = getTextFromEasyOCR(self.image)
+                        task = TextExtractor.getTextFromTesseract4
+                    # case "EasyOCR_version": #dream cases
+                    #    task = getTextFromEasyOCR()
                     case _:
                         logger.critical(
                             "Should be unreachable. Something wrong in code."
                         )
+                event_loop = asyncio.get_running_loop()
+                with ProcessPoolExecutor() as executor:
+                    logger.debug("Setting new Process to extract Text.")
+                    self.outputText = await event_loop.run_in_executor(
+                        executor, task, self.image
+                    )
 
                 self.outputText = self.outputText.strip()
                 if self.outputText:
@@ -60,7 +68,7 @@ class ImageProcessingContext:
                         f"Output Extracted Text from Image is {self.outputText}"
                     )
                 else:
-                    raise ImageProcessingException("No Text To Extract")
+                    raise TextExtractor.ImageProcessingException("No Text To Extract")
 
                 if (self.outputText is not None) and not ConfigManager.get_boolean(
                     "view-image-in-output"
@@ -72,7 +80,7 @@ class ImageProcessingContext:
 
                 return self.outputText
 
-            except ImageProcessingException as ipe:
+            except TextExtractor.ImageProcessingException as ipe:
                 logger.error(
                     f"Error Occurred during Image Processing. Error Message: {ipe}"
                 )
@@ -127,16 +135,6 @@ class ImageProcessingContext:
         self.image = image
         logger.info(f"successfully set Image from Another Image {self.image}")
 
-    def getTextFromTesseract4(self) -> str:
-        try:
-            import pytesseract
-
-            # should happen async
-            return pytesseract.image_to_string(self.image)
-        except Exception as e:
-            logger.error(f"Unable to Process Image via Tesseract4, error message = {e}")
-            raise ImageProcessingException("unable to Process Image via Tesseract4")
-
     def setOutputWindowPresent(self) -> None:
         if self.outputText:
             # get ID as static variable, that gets updated for every of this call
@@ -148,6 +146,20 @@ class ImageProcessingContext:
 
     @staticmethod
     def getOutput(
+        inputSourceType: ImageInputSourceType,
+        source: str | Image | None,
+        errorCallbackFunction: Callable[[str], None],
+        application: Gtk.Application,
+    ) -> None:
+        asyncio.create_task(
+            ImageProcessingContext._getOutput(
+                inputSourceType, source, errorCallbackFunction, application
+            )
+        )
+        logger.debug("Async Task getOutput called.")
+
+    @staticmethod
+    async def _getOutput(
         inputSourceType: ImageInputSourceType,
         source: str | Image | None,
         errorCallbackFunction: Callable[[str], None],
@@ -171,19 +183,21 @@ class ImageProcessingContext:
             logger.debug("Exiting from Callback")
         else:
             try:
-                ipc.getText()
+                await ipc.getText()
                 ipc.setOutputWindowPresent()
                 if ConfigManager.get_boolean("auto-copy-output-text"):
                     logger.debug("Setting output text to clipboard.")
                     clipboard = Gdk.Display.get_default().get_clipboard()
                     clipboard.set(ipc.outputText)
                 return True
-            except ImageProcessingException as ipe:
+            except TextExtractor.ImageProcessingException as ipe:
+                logger.error(f"Error: {ipe!s}")
                 logger.info("Error Callback Function called.")
                 errorCallbackFunction(str(ipe))
                 logger.debug("Exiting from Callback")
                 # maybe try another model??
             except Exception as e:
+                logger.error(f"Error: {e!s}")
                 logger.info("Error Callback Function called.")
                 errorCallbackFunction(str(e))
                 logger.debug("Exiting from Callback")

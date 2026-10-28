@@ -46,7 +46,8 @@ xlens_sources = [
   'OutputViewer.py',
   'PreferencesPage.py',
   'FromURLPage.py',
-  'app_utils.py'
+  'app_utils.py',
+  'TextExtractor.py'
 ]
 
 install_data(xlens_sources, install_dir: moduledir)
