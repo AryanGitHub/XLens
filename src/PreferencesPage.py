@@ -41,5 +41,7 @@ class PreferencesPage(Adw.NavigationPage):
             "delete-taken-screenshot-image",
             self.switch_save_screenshot,
             "active",
+            # --- AI-assisted (modified) start ---
             Gio.SettingsBindFlags.DEFAULT | Gio.SettingsBindFlags.INVERT_BOOLEAN,
+            # --- AI-assisted (modified) end ---
         )

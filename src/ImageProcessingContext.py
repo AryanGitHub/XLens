@@ -99,12 +99,14 @@ class ImageProcessingContext:
                 logger.debug(f"successfully got response. Response = {response}")
                 self.image = Image.open(BytesIO(image_data))
                 logger.info("successfully set Image from URL")
+        # --- AI-assisted (modified) start ---
         except urllib.error.URLError as e:
             logger.error(f"Network error while fetching image from {url}: {e}")
             raise SetImageException("Network error")
         except ValueError as ve:
             logger.error(f"Invalid URL {ve}.")
             raise SetImageException("Invalid URL")
+        # --- AI-assisted (modified) end ---
         except Exception as e:
             logger.error(
                 f"Failed to process the downloaded image data: {e}. The type of Exception is {type(e)}"
