@@ -1,8 +1,14 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 data/org.gnome.gitlab.oumuamua.XLens.desktop.in
-data/org.gnome.gitlab.oumuamua.XLens.metainfo.xml.in
 data/org.gnome.gitlab.oumuamua.XLens.gschema.xml
+data/org.gnome.gitlab.oumuamua.XLens.metainfo.xml.in
+src/FromURLPage.py
+src/ImageProcessingContext.py
+src/OutputViewer.py
+src/OutputViewer.ui
+src/PreferencesPage.py
 src/main.py
+src/shortcuts-dialog.ui
 src/window.py
 src/window.ui
