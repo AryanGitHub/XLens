@@ -11,3 +11,6 @@ build/
 __pycache__/
 *.pyc
 *.pyo
+
+# flatpak pip generator output file, auto generated
+flatpak/python3-modules.json
