@@ -436,6 +436,31 @@ git push origin main
 
 git push --tags
 ```
+
+## 5. Update the Flatpak Manifest
+
+To ensure build reproducibility and satisfy Flathub requirements, you must pin the Flatpak manifest to the exact Git tag and commit hash you just created.
+
+1. **Get the full commit hash** for your new tag by running:
+
+   ```
+   git rev-parse 1.0.0
+   ```
+
+2. **Update the manifest:** Open `org.gnome.gitlab.Oumuamua.XLens.yaml` and add the `tag` and `commit` under the `xlens` module sources:
+
+   ```
+   modules:
+     - name: xlens
+       buildsystem: meson 
+       builddir: true
+       sources:
+         # use type git for release
+         - type: git
+           url: "https://gitlab.gnome.org/Oumuamua/XLens"
+           tag: "1.0.0"                           # <-- Your new tag
+           commit: "INSERT_FULL_COMMIT_HASH_HERE" # <-- The hash from step 1
+   ```
 ---
 
 ## FAQ
