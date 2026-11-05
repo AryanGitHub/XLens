@@ -22,7 +22,9 @@ Extract text from images and scanned documents seamlessly with a modern, adaptiv
 
 - [How to Build Locally](#how-to-build-locally)
 
-- [How to Build the Flatpak App Locally](#how-to-build-the-flatpak-app)
+- [How to Build the Flatpak App Locally For Development](#how-to-build-the-flatpak-app-locally-for-development)
+
+- [How to Build the Released Flatpak App](#how-to-build-the-released-flatpak-app)
 
 - [(Incomeplete) How to release new version?](#release-process)
 
@@ -220,46 +222,140 @@ rm -rf ./build
 ```
 
 ---
-
-
-## How to Build the Flatpak App
+## How to Build the Flatpak App Locally For Development
 
 You can build and install XLens as a Flatpak using the official Flatpak Builder Tools. Follow these step-by-step instructions:
 
-### 1. Prepare the build directory**  
+### 1. Prepare the build directory
+
 First, create a dedicated directory for the Flatpak build and navigate into it:
-```bash
+
+```
 mkdir -p "./build/flatpak" && cd "./build/flatpak"
+
 ```
 
-### 2. Download the Flatpak Builder Tools**  
+### 2. Download the Flatpak Builder Tools
+
 Clone the official tools repository to get the `flatpak-pip-generator` script:
-```bash
+
+```
 git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builder
+
 ```
 
-### 3. Generate the Python dependencies manifest**  
+### 3. Generate the Python dependencies manifest
+
 The generator requires the `requirements-parser` package. Install it, and then run the script against the project's `requirements.txt` to generate the `python3-modules.json` file:
-```bash
+
+```
 # Install the script's required dependency
 pip install --user requirements-parser
 
 # Run the generator
 python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o python3-modules.json
+
 ```
 
-### 4. Build and install the Flatpak**  
+### 4. Add the GNOME Nightly Flatpak Repository
+
+To build the development version, you need the GNOME Nightly repository to pull in the required runtime. Please visit the official GNOME Nightly page: <https://nightly.gnome.org/>
+
+Follow the instructions there to install Flatpak and add the `gnome-nightly` remote to your system user before proceeding.
+(use the --user flag)
+
+### 5. Build and install the Flatpak
+
 Finally, use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
-```bash
-flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
+
+```
+flatpak-builder --force-clean --user --install-deps-from=gnome-nightly --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.Devel.yaml
+
 ```
 
-### 5. Uninstalling
-```bash
-flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
+### 6. Uninstalling
+
+```
+flatpak uninstall org.gnome.gitlab.Oumuamua.XLens.Devel
+
 ```
 
 ---
+
+## How to Build the Released Flatpak App 
+
+You can build and install XLens as a Flatpak using the official Flatpak Builder Tools. Follow these step-by-step instructions:
+
+### 1. Prepare the build directory
+
+First, create a dedicated directory for the Flatpak build and navigate into it:
+
+```
+mkdir -p "./build/flatpak" && cd "./build/flatpak"
+
+```
+
+### 2. Download the Flatpak Builder Tools
+
+Clone the official tools repository to get the `flatpak-pip-generator` script:
+
+```
+git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builder
+
+```
+
+### 3. Generate the Python dependencies manifest
+
+The generator requires the `requirements-parser` package. Install it, and then run the script against the project's `requirements.txt` to generate the `python3-modules.json` file:
+
+```
+# Install the script's required dependency
+pip install --user requirements-parser
+
+# Run the generator
+python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o python3-modules.json
+
+```
+
+### 4. Lint the Flatpak manifest
+
+Before building, verify your manifest against Flathub standards using the [flatpak-builder-lint](https://github.com/flathub-infra/flatpak-builder-lint) tool. It can be installed directly via Flathub.
+
+Once installed, run this command to check your manifest:
+
+```
+flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
+
+```
+
+### 5. Build and install the Flatpak
+
+Use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
+
+```
+flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
+
+```
+
+### 6. Lint the built repository
+
+After the build completes successfully, lint the generated repository:
+
+```
+flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo ./repo
+
+```
+
+### 7. Uninstalling
+
+If you need to remove the installed application, run:
+
+```
+flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
+
+```
+---
+
 
 ## Release Process
 
