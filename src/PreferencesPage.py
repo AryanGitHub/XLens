@@ -14,7 +14,7 @@ import gettext
 _ = gettext.gettext
 
 
-@Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/PreferencesPage.ui")
+@Gtk.Template(resource_path="/org/gnome/gitlab/Oumuamua/XLens/PreferencesPage.ui")
 class PreferencesPage(Adw.NavigationPage):
     __gtype_name__ = "PreferencesPage"
 

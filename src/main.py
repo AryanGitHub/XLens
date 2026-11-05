@@ -44,9 +44,9 @@ class XlensApplication(Adw.Application):
 
     def __init__(self, version: str):
         super().__init__(
-            application_id="org.gnome.gitlab.oumuamua.XLens",
+            application_id="org.gnome.gitlab.Oumuamua.XLens",
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            resource_base_path="/org/gnome/gitlab/oumuamua/XLens",
+            resource_base_path="/org/gnome/gitlab/Oumuamua/XLens",
         )
         self.version = version
         logger.info("App started.")
@@ -72,7 +72,7 @@ class XlensApplication(Adw.Application):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
             application_name="XLens",
-            application_icon="org.gnome.gitlab.oumuamua.XLens",
+            application_icon="org.gnome.gitlab.Oumuamua.XLens",
             developer_name="Oumuamua",
             version=self.version,
             # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.

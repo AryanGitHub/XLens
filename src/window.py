@@ -36,7 +36,7 @@ import gettext
 _ = gettext.gettext
 
 
-@Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/window.ui")
+@Gtk.Template(resource_path="/org/gnome/gitlab/Oumuamua/XLens/window.ui")
 class XlensMainWindow(Adw.ApplicationWindow):
     __gtype_name__ = "XlensMainWindow"
 

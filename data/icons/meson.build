@@ -1,4 +1,4 @@
-application_id = 'org.gnome.gitlab.oumuamua.XLens'
+application_id = 'org.gnome.gitlab.Oumuamua.XLens'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(

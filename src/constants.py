@@ -2,7 +2,7 @@ from pathlib import Path
 
 from gi.repository import GLib
 
-username = "oumuamua"
+username = "Oumuamua"
 app_name = "XLens"
 loggingConfigPath = "./logging_config.json"
 app_id = f"org.gnome.gitlab.{username}.{app_name}"

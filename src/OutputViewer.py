@@ -12,7 +12,7 @@ import gettext
 _ = gettext.gettext
 
 
-@Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/OutputViewer.ui")
+@Gtk.Template(resource_path="/org/gnome/gitlab/Oumuamua/XLens/OutputViewer.ui")
 class OutputViewerWindow(Adw.ApplicationWindow):
     __gtype_name__ = "OutputViewerWindow"
     outputTextView: Gtk.TextView = Gtk.Template.Child()

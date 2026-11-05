@@ -4,7 +4,7 @@
 
 > [NOTE]
 
-> Development happens on [Gnome GitLab](https://gitlab.gnome.org/Oumuamua/xlens). If you are viewing this on GitHub, please treat this as a read-only mirror and submit all issues and merge requests to the GitLab repository.
+> Development happens on [Gnome GitLab](https://gitlab.gnome.org/Oumuamua/XLens). If you are viewing this on GitHub, please treat this as a read-only mirror and submit all issues and merge requests to the GitLab repository.
 
   
 
@@ -81,7 +81,7 @@ Once the dependencies are installed, clone the project to your local machine and
 
 ```bash
 
-git clone https://gitlab.gnome.org/Oumuamua/xlens.git
+git clone https://gitlab.gnome.org/Oumuamua/XLens.git
 
 cd xlens
 ```
@@ -251,12 +251,12 @@ python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o 
 ### 4. Build and install the Flatpak**  
 Finally, use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
 ```bash
-flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.oumuamua.XLens.yaml
+flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
 ```
 
 ### 5. Uninstalling
 ```bash
-flatpak uninstall org.gnome.gitlab.oumuamua.XLens
+flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
 ```
 
 ---

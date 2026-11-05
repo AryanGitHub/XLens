@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="xlens">
 
-  <enum id="org.gnome.gitlab.oumuamua.XLens.image.processing.module">
+  <enum id="org.gnome.gitlab.Oumuamua.XLens.image.processing.module">
     <value nick="Tesseract_4" value="0"/>
   </enum>
 
 
-	<schema id="org.gnome.gitlab.oumuamua.XLens" path="/org/gnome/gitlab/oumuamua/XLens/">
+	<schema id="org.gnome.gitlab.Oumuamua.XLens" path="/org/gnome/gitlab/Oumuamua/XLens/">
 
 		<key name="auto-copy-output-text" type="b">
 			<default>false</default>
@@ -26,7 +26,7 @@
 			<description>Whether the application to display the Input Image in Output Screen.</description>
 		</key>
 
-		<key name="image-processing-module" enum="org.gnome.gitlab.oumuamua.XLens.image.processing.module">
+		<key name="image-processing-module" enum="org.gnome.gitlab.Oumuamua.XLens.image.processing.module">
 			<default>'Tesseract_4'</default>
 			<summary>Module to process Images</summary>
 			<description>Which backend OCR should be used to process the Images, to extract text.</description>

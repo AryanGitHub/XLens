@@ -14,7 +14,7 @@ import gettext
 _ = gettext.gettext
 
 
-@Gtk.Template(resource_path="/org/gnome/gitlab/oumuamua/XLens/FromURLPage.ui")
+@Gtk.Template(resource_path="/org/gnome/gitlab/Oumuamua/XLens/FromURLPage.ui")
 class FromURLPage(Adw.NavigationPage):
     __gtype_name__ = "FromURLPage"
 

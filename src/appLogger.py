@@ -11,7 +11,7 @@ def configure_app_logging() -> None:
 
     # --- AI-assisted (modified) start ---
     gbytes = Gio.resources_lookup_data(
-        "/org/gnome/gitlab/oumuamua/XLens/logging_config.json",
+        "/org/gnome/gitlab/Oumuamua/XLens/logging_config.json",
         Gio.ResourceLookupFlags.NONE,
     )
     # --- AI-assisted (modified) end ---
