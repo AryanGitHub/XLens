@@ -1,0 +1,78 @@
+id: "org.gnome.gitlab.Oumuamua.XLens"
+runtime: "org.gnome.Platform" 
+runtime-version : "51"
+sdk: "org.gnome.Sdk"
+command: "xlens"
+
+build-options:
+  env:
+    - TESSDATA_PREFIX=/app/share/tessdata/
+
+cleanup: 
+    - "/include"
+    - "/lib/pkgconfig"
+    - "/man"
+    - "/share/doc"
+    - "/share/gtk-doc"
+    - "/share/man"
+    - "/share/pkgconfig"
+    - "*.la"
+    - "*.a"
+
+finish-args:
+    - "--share=network"
+    - "--share=ipc"
+    - "--socket=fallback-x11"
+    - "--device=dri"
+    - "--socket=wayland"
+    - "--socket=pulseaudio"
+    - "--talk-name=org.freedesktop.Notifications"
+    - "--filesystem=xdg-pictures"
+    
+modules:
+    - name: leptonica
+      buildsystem : autotools 
+      builddir: true
+      config-opts:
+        - "--disable-static"
+      sources:
+        - type: git
+          url: "https://github.com/DanBloomberg/leptonica"
+          tag: 1.87.0
+          commit: "13275a278eb55b5746e33f95fbf5a2c8f604b3ab"
+          
+    - name: tesseract
+      buildsystem : autotools 
+      builddir: true
+      config-opts:
+        - "--disable-static"
+        - "--disable-graphics"
+        - "--enable-legacy"
+      sources:
+        - type: git
+          url: "https://github.com/tesseract-ocr/tesseract"
+          tag: 5.5.4
+          commit: "7e548e6eff172f38f97664afe7f7ce40db36c8d6"
+         
+    - name: english-language-data 
+      buildsystem: simple
+      build-commands:
+      - install -D -v -m 644 eng.traineddata $TESSDATA_PREFIX
+      sources:
+        - type: file
+          dest-filename: "eng.traineddata"
+          # url: "https://github.com/tesseract-ocr/tessdata_best/raw/refs/heads/main/eng.traineddata" #not using head commit, as it can change.
+          url: "https://github.com/tesseract-ocr/tessdata_best/raw/e12c65a915945e4c28e237a9b52bc4a8f39a0cec/eng.traineddata" #using latest commit, you can update this, and also sha256
+          sha256: "8280aed0782fe27257a68ea10fe7ef324ca0f8d85bd2fd145d1c2b560bcb66ba"
+      
+    - "python3-modules.json"
+    
+    - name: xlens
+      buildsystem : meson 
+      builddir: true
+      sources:
+        # use type git for release
+        - type: git
+          url: "https://gitlab.gnome.org/Oumuamua/XLens"
+          # tag:
+          # commit:
