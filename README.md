@@ -30,6 +30,7 @@ Extract text from images and scanned documents seamlessly with a modern, adaptiv
 
 - [(Incomeplete) How to contribute?](#release-process)
   
+- [FAQs](#faqs)
 
 ---
 
@@ -463,7 +464,7 @@ To ensure build reproducibility and satisfy Flathub requirements, you must pin t
    ```
 ---
 
-## FAQ
+## FAQs
 
 **Why are there two Flatpak manifest files?**
 This project uses two separate manifest files to follow Flatpak best practices, keeping local development entirely isolated from the stable release.
