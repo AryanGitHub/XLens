@@ -436,3 +436,12 @@ git push origin main
 
 git push --tags
 ```
+---
+
+## FAQ
+
+**Why are there two Flatpak manifest files?**
+This project uses two separate manifest files to follow Flatpak best practices, keeping local development entirely isolated from the stable release.
+
+* **Production Manifest (`org.gnome.gitlab.Oumuamua.xlens.yaml`):** This is the official stable version intended for Flathub. It builds against a stable GNOME runtime (e.g., version 51) and pulls strictly version-controlled source code.
+* **Development Manifest (`org.gnome.gitlab.Oumuamua.xlens.Devel.yaml`):** This is used for local testing. It builds against GNOME Nightly (the `master` branch) to test against upcoming GNOME features and compiles your local, uncommitted directory changes instantly.
