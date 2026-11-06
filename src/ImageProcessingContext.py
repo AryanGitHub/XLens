@@ -147,21 +147,7 @@ class ImageProcessingContext:
             logger.error("Output Text is Empty")
 
     @staticmethod
-    def getOutput(
-        inputSourceType: ImageInputSourceType,
-        source: str | Image | None,
-        errorCallbackFunction: Callable[[str], None],
-        application: Gtk.Application,
-    ) -> None:
-        asyncio.create_task(
-            ImageProcessingContext._getOutput(
-                inputSourceType, source, errorCallbackFunction, application
-            )
-        )
-        logger.debug("Async Task getOutput called.")
-
-    @staticmethod
-    async def _getOutput(
+    async def getOutput(
         inputSourceType: ImageInputSourceType,
         source: str | Image | None,
         errorCallbackFunction: Callable[[str], None],

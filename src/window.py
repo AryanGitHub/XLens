@@ -287,10 +287,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
         logger.info("Preferences button clicked.")
         self.app_nav_view.push_by_tag("preferences_page")
 
-    def start_take_screenshot_procedure(self, action, parameter) -> None:
+    @app_utils.async_handler
+    async def start_take_screenshot_procedure(self, action, parameter) -> None:
         logger.debug("take screenshot button clicked")
 
-        def take_screenshot_callback_function(portal, result, user_data) -> None:
+        @app_utils.async_handler
+        async def take_screenshot_callback_function(portal, result, user_data) -> None:
             try:
                 # --- AI-assisted (modified) start ---
                 image_uri = portal.take_screenshot_finish(result)
@@ -304,7 +306,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
             # --- AI-assisted (modified) end ---
             else:
                 sourceType = IPC.ImageInputSourceType.URL
-                IPC.getOutput(
+                await IPC.getOutput(
                     sourceType,
                     image_uri,
                     self.getErrorCallbackGenerateToastFunction(),
