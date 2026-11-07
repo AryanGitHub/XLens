@@ -56,6 +56,7 @@ class XlensApplication(Adw.Application):
         app_utils.create_action(self, "about", self.on_about_action)
         app_utils.create_action(self, "preferences", self.on_preferences_action)
 
+    @app_utils.debug_log
     def do_activate(self) -> None:
         """Called when the application is activated.
 
@@ -68,6 +69,7 @@ class XlensApplication(Adw.Application):
             logger.info("Main Window Initilised")
         win.present()
 
+    @app_utils.debug_log
     def on_about_action(self, *args) -> None:
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
@@ -82,11 +84,13 @@ class XlensApplication(Adw.Application):
         )
         about.present(self.props.active_window)
 
+    @app_utils.debug_log
     def on_preferences_action(self, widget, _) -> None:
         """Callback for the app.preferences action."""
         print("app.preferences action activated")
 
 
+@app_utils.debug_log
 def main(version: str):
     """The application's entry point."""
     # --- AI-assisted (modified) start ---
