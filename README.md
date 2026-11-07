@@ -466,8 +466,39 @@ To ensure build reproducibility and satisfy Flathub requirements, you must pin t
 
 ## FAQs
 
-**Why are there two Flatpak manifest files?**
+**Q: Why are there two Flatpak manifest files?**
 This project uses two separate manifest files to follow Flatpak best practices, keeping local development entirely isolated from the stable release.
 
 * **Production Manifest (`org.gnome.gitlab.Oumuamua.xlens.yaml`):** This is the official stable version intended for Flathub. It builds against a stable GNOME runtime (e.g., version 51) and pulls strictly version-controlled source code.
 * **Development Manifest (`org.gnome.gitlab.Oumuamua.xlens.Devel.yaml`):** This is used for local testing. It builds against GNOME Nightly (the `master` branch) to test against upcoming GNOME features and compiles your local, uncommitted directory changes instantly.
+
+
+
+**Q: How do I use the `@debug_log` decorator for debugging?**
+
+The `@debug_log` decorator logs function arguments and return values. For performance reasons, it is disabled by default. 
+
+To enable it, set the `XLENS_ENABLE_TRACE_LOGS` environment variable to `true` (or `TRUE`) when launching the app:
+
+```bash
+XLENS_ENABLE_TRACE_LOGS=true ./build/src/xlens
+```
+
+**Q: What is the `@async_handler` decorator and when should I use it?**
+
+The `@async_handler` decorator safely runs asynchronous functions in the background, preventing Python's garbage collector from destroying the task before it finishes.
+It wraps your function in an `asyncio.create_task()`.
+
+**How to use it:**
+It is highly recommended for UI development. Use it to wrap async functions that are activated like when pressing a button or triggering other UI events, so the tasks run smoothly without freezing the interface.
+
+```python
+from . import app_utils
+# Attach this to your GTK button's "clicked" signal
+
+
+@app_utils.async_handler
+async def on_button_clicked(button):
+    # Safely await background operations
+    await fetch_data_from_network()
+```
