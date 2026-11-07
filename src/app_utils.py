@@ -3,8 +3,9 @@ from . import appLogger
 appLogger.configure_app_logging()
 logger = appLogger.getLogger(__name__)
 import asyncio
-from collections.abc import Any, Callable
+from collections.abc import Callable
 from functools import wraps
+from typing import Any
 
 from gi.repository import Gio, Gtk
 
@@ -62,22 +63,41 @@ logger.debug(f"ENABLE_TRACE_LOGS: {XLENS_ENABLE_TRACE_LOGS}")
 
 
 if XLENS_ENABLE_TRACE_LOGS:
+    import inspect
 
     def debug_log(func: Callable) -> Callable:
 
-        @wraps(func)
-        def wrapper(*args, **kwargs) -> Any:
-            logger.debug(
-                "Function: '%s' called, with args=%s and kw=%s",
-                func.__name__,
-                args,
-                kwargs,
-            )
-            ret: Any = func(*args, **kwargs)
-            logger.debug(f"Function: '{func.__name__}' returned {ret}")
-            return ret
+        if inspect.iscoroutinefunction(func):
 
-        return wrapper
+            @wraps(func)
+            async def wrapper(*args, **kwargs) -> Any:
+                logger.debug(
+                    "Async Function: '%s' called, with args=%s and kw=%s",
+                    func.__name__,
+                    args,
+                    kwargs,
+                )
+                ret: Any = await func(*args, **kwargs)
+                logger.debug(f"Async Function: '{func.__name__}' returned {ret}")
+                return ret
+
+            return wrapper
+
+        else:
+
+            @wraps(func)
+            def wrapper(*args, **kwargs) -> Any:
+                logger.debug(
+                    "Function: '%s' called, with args=%s and kw=%s",
+                    func.__name__,
+                    args,
+                    kwargs,
+                )
+                ret: Any = func(*args, **kwargs)
+                logger.debug(f"Function: '{func.__name__}' returned {ret}")
+                return ret
+
+            return wrapper
 
 else:
 
