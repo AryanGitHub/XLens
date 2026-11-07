@@ -331,7 +331,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                 take_screenshot_callback_function,
                 None,
             )
-        except Exception as e:
+        except GLib.Error as e:
             logger.error(f"Failed to initiate screenshot: {e}")
 
     @Gtk.Template.Callback()
