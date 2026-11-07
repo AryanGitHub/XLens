@@ -9,7 +9,7 @@ from enum import Enum
 from gi.repository import Gdk, Gtk
 from PIL import Image, UnidentifiedImageError
 
-from . import TextExtractor, appLogger
+from . import TextExtractor, app_utils, appLogger
 from .ConfigManager import ConfigManager
 from .constants import configPath
 from .OutputViewer import OutputViewerWindow as OVW
@@ -34,8 +34,9 @@ class ImageProcessingContext:
         self.application: Gtk.Application = application
         logger.debug(f"ImageProcessingContext initialized. {self}")
 
+    @app_utils.debug_log
     async def getText(self) -> str:
-        logger.debug("getText method called.")
+
         if not self.image:
             logger.error("self.image is None, cannot Proceed further to extract text.")
             raise TextExtractor.ImageProcessingException("Image Not Found")
@@ -66,15 +67,11 @@ class ImageProcessingContext:
                     )
 
                 self.outputText = self.outputText.strip()
-                if self.outputText:
-                    logger.info(
-                        f"Output Extracted Text from Image is {self.outputText}"
-                    )
-                else:
+                if not self.outputText:
                     raise TextExtractor.ImageProcessingException("No Text To Extract")
 
-                if (self.outputText is not None) and not ConfigManager.get_boolean(
-                    "view-image-in-output"
+                if (self.outputText is not None) and (
+                    not ConfigManager.get_boolean("view-image-in-output")
                 ):
                     logger.debug(
                         "Image already Processed, and 'view-image-in-output' is False, so the Image is not required further, hence releasing the memory."
@@ -89,12 +86,12 @@ class ImageProcessingContext:
                 )
                 raise  # for correct toast error
 
+    @app_utils.debug_log
     def setImageFromUrl(self, url: str) -> None:
         import urllib.error
         import urllib.request
         from io import BytesIO
 
-        logger.debug("Set Image from URL.")
         logger.info(f"URL To get Image From {url}")
         try:
             with urllib.request.urlopen(url) as response:
@@ -116,9 +113,9 @@ class ImageProcessingContext:
             )
             raise SetImageException("Invalid Image Data") from e
 
+    @app_utils.debug_log
     def setImageFromFilePath(self, filePath: str) -> None:
 
-        logger.debug("Set Image from FilePath")
         logger.info(f"File Path To get Image From {filePath}")
 
         try:
@@ -136,11 +133,13 @@ class ImageProcessingContext:
             )
             raise SetImageException("Unable to load Image") from e
 
+    @app_utils.debug_log
     def setImageFromImage(self, image: Image) -> None:
-        logger.debug("Set Image from another Image")
+
         self.image = image
         logger.info(f"successfully set Image from Another Image {self.image}")
 
+    @app_utils.debug_log
     def setOutputWindowPresent(self) -> None:
         if self.outputText:
             # get ID as static variable, that gets updated for every of this call
@@ -151,6 +150,7 @@ class ImageProcessingContext:
             logger.error("Output Text is Empty")
 
     @staticmethod
+    @app_utils.debug_log
     async def getOutput(
         inputSourceType: ImageInputSourceType,
         source: str | Image | None,
@@ -173,9 +173,7 @@ class ImageProcessingContext:
                     )
                     raise SetImageException("Unrecognised Image Source")
         except SetImageException as e:
-            logger.info("Error Callback Function called.")
             errorCallbackFunction(str(e))
-            logger.debug("Exiting from Callback")
         else:
             try:
                 await ipc.getText()
@@ -187,9 +185,7 @@ class ImageProcessingContext:
                 return True
             except (TextExtractor.ImageProcessingException, KeyError) as e:
                 logger.error(f"Error: {e!s}")
-                logger.info("Error Callback Function called.")
                 errorCallbackFunction(str(e))
-                logger.debug("Exiting from Callback")
                 # maybe try another model??
 
         finally:
