@@ -190,6 +190,9 @@ meson install -C build
 
 # 4. Run the application
 ./build/src/xlens
+
+# 5. (Optional) Run with trace logging enabled (activates the @debug_log decorator)
+XLENS_ENABLE_TRACE_LOGS=true ./build/src/xlens
 ```
 
   
@@ -199,7 +202,7 @@ Alternatively, you can chain these commands together into a single line:
   
 
 ```bash
-meson setup build --prefix ~/.local && meson compile -C build && meson install -C build && ./build/src/xlens
+meson setup build --prefix ~/.local && meson compile -C build && meson install -C build && XLENS_ENABLE_TRACE_LOGS=true ./build/src/xlens
 ```
 
   
