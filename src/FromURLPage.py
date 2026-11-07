@@ -4,7 +4,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk
 
-from . import appLogger
+from . import app_utils, appLogger
 from .ImageProcessingContext import ImageProcessingContext as IPC
 
 logger = appLogger.getLogger(__name__)
@@ -41,7 +41,8 @@ class FromURLPage(Adw.NavigationPage):
             self.URL_entry.set_text("")
 
     @Gtk.Template.Callback()
-    def on_extract_text_from_url_button_clicked(self, entry) -> None:
+    @app_utils.async_handler
+    async def on_extract_text_from_url_button_clicked(self, entry) -> None:
         logger.debug("Extract text from URL button clicked")
         url_link = self.URL_entry.get_text().strip()
         logger.debug(f"URL link from search entry : {url_link}")
@@ -50,7 +51,7 @@ class FromURLPage(Adw.NavigationPage):
             self.getErrorCallbackGenerateToastFunction()(_("Empty URL Entry"))
         else:
             sourceType = IPC.ImageInputSourceType.URL
-            result_success = IPC.getOutput(
+            result_success = await IPC.getOutput(
                 sourceType,
                 url_link,
                 self.getErrorCallbackGenerateToastFunction(),
