@@ -371,9 +371,11 @@ class XlensMainWindow(Adw.ApplicationWindow):
             "Successfully, put the restrictions of actions to only work on main page."
         )
 
+    @app_utils.debug_log
     def getErrorCallbackGenerateToastFunction(self) -> Callable[[str, int], None]:
         toast_overlay = self.toast_overlay
 
+        @app_utils.debug_log
         def errorCallbackGenerateToastFunction(
             message: str, timeout: int = toast_timeout
         ) -> None:

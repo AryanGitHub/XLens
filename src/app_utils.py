@@ -3,7 +3,7 @@ from . import appLogger
 appLogger.configure_app_logging()
 logger = appLogger.getLogger(__name__)
 import asyncio
-from collections.abc import Callable
+from collections.abc import Any, Callable
 from functools import wraps
 
 from gi.repository import Gio, Gtk
@@ -51,3 +51,35 @@ def async_handler(async_function: Callable) -> Callable:
         return task
 
     return wrapper
+
+
+import os
+
+XLENS_ENABLE_TRACE_LOGS = (
+    os.getenv("XLENS_ENABLE_TRACE_LOGS", "False").lower() == "true"
+)
+logger.debug(f"ENABLE_TRACE_LOGS: {XLENS_ENABLE_TRACE_LOGS}")
+
+
+if XLENS_ENABLE_TRACE_LOGS:
+
+    def debug_log(func: Callable) -> Callable:
+
+        @wraps(func)
+        def wrapper(*args, **kwargs) -> Any:
+            logger.debug(
+                "Function: '%s' called, with args=%s and kw=%s",
+                func.__name__,
+                args,
+                kwargs,
+            )
+            ret: Any = func(*args, **kwargs)
+            logger.debug(f"Function: '{func.__name__}' returned {ret}")
+            return ret
+
+        return wrapper
+
+else:
+
+    def debug_log(func: Callable) -> Callable:
+        return func
