@@ -149,7 +149,8 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
     # --- AI-assisted (modified) end ---
 
-    def start_paste_procedure(self, action, parameter) -> None:
+    @app_utils.async_handler
+    async def start_paste_procedure(self, action, parameter) -> None:
 
         logger.debug("started paste action")
 
@@ -165,7 +166,8 @@ class XlensMainWindow(Adw.ApplicationWindow):
             # --- AI-assisted (modified) end ---
             logger.info("Clipboard contains text.")
 
-            def on_paste_URL(clipboard, result) -> None:
+            @app_utils.async_handler
+            async def on_paste_URL(clipboard, result) -> None:
                 try:
                     image_url_string = clipboard.read_text_finish(result)
                     logger.debug(f"clipboard text is: {image_url_string}")
@@ -184,7 +186,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                     return
 
                 sourceType = IPC.ImageInputSourceType.URL
-                IPC.getOutput(
+                await IPC.getOutput(
                     sourceType,
                     image_url_string,
                     self.getErrorCallbackGenerateToastFunction(),
@@ -207,8 +209,9 @@ class XlensMainWindow(Adw.ApplicationWindow):
             # --- AI-assisted (modified) end ---
             logger.info("Clipboard contains an image.")
 
+            @app_utils.async_handler
             # This callback runs when the clipboard Image data is ready
-            def on_paste_image(clipboard, result) -> None:
+            async def on_paste_image(clipboard, result) -> None:
                 from io import BytesIO
 
                 from PIL import Image, UnidentifiedImageError
@@ -242,7 +245,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                         f"Success! Loaded {img.format} image of size {img.size}"
                     )
                     sourceType = IPC.ImageInputSourceType.IMAGE
-                    IPC.getOutput(
+                    await IPC.getOutput(
                         sourceType,
                         img,
                         self.getErrorCallbackGenerateToastFunction(),
