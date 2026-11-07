@@ -94,31 +94,36 @@ class XlensMainWindow(Adw.ApplicationWindow):
         # Return False so GTK handles the default window destruction
         return False
 
-    def open_file_dialog(self, action, parameter) -> None:
+    @app_utils.async_handler
+    async def open_file_dialog(self, action, parameter) -> None:
         logger.info("Open Action Started.")
 
+        @app_utils.async_handler
         # --- AI-assisted (modified) start ---
-        def on_open_response(dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
+        async def on_open_response(
+            dialog: Gtk.FileDialog, result: Gio.AsyncResult
+        ) -> None:
             try:
                 file: Gio.File | None = dialog.open_finish(result)
                 # If the user selected a file...
                 if file is not None:
                     # ... open it
                     logger.info(f"File Selected. {file}")
-                    open_file(file)
+                    await open_file(file)
             except GLib.Error as err:
                 if err.code == Gtk.DialogError.DISMISSED:
                     # --- AI-assisted (modified) end ---
                     self.getErrorCallbackGenerateToastFunction()("User Cancelled")
                 logger.error(f"Gtk File Dialog Error: {err!s}")
 
+        @app_utils.async_handler
         # --- AI-assisted (modified) start ---
-        def open_file(file: Gio.File) -> None:
+        async def open_file(file: Gio.File) -> None:
             file_path = file.peek_path()
             # --- AI-assisted (modified) end ---
             logger.info(f"file path = {file_path}")
             sourceType = IPC.ImageInputSourceType.FILE_PATH
-            IPC.getOutput(
+            await IPC.getOutput(
                 sourceType,
                 file_path,
                 self.getErrorCallbackGenerateToastFunction(),
