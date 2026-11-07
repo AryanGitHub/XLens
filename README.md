@@ -236,7 +236,6 @@ First, create a dedicated directory for the Flatpak build and navigate into it:
 
 ```
 mkdir -p "./build/flatpak" && cd "./build/flatpak"
-
 ```
 
 ### 2. Download the Flatpak Builder Tools
@@ -245,7 +244,6 @@ Clone the official tools repository to get the `flatpak-pip-generator` script:
 
 ```
 git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builder
-
 ```
 
 ### 3. Generate the Python dependencies manifest
@@ -258,7 +256,6 @@ pip install --user requirements-parser
 
 # Run the generator
 python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o python3-modules.json
-
 ```
 
 ### 4. Add the GNOME Nightly Flatpak Repository
@@ -272,16 +269,22 @@ Follow the instructions there to install Flatpak and add the `gnome-nightly` rem
 
 Finally, use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
 
-```
+```bash
 flatpak-builder --force-clean --user --install-deps-from=gnome-nightly --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.Devel.yaml
-
 ```
 
-### 6. Uninstalling
+### 6. (Optional) Enable `@debug_log` decorator
 
+Also you can run it with `XLENS_ENABLE_TRACE_LOGS=true` environment variable, to enable trace logging via `@debug_log` decorator.
+```bash
+XLENS_ENABLE_TRACE_LOGS=true flatpak run org.gnome.gitlab.Oumuamua.XLens
 ```
-flatpak uninstall org.gnome.gitlab.Oumuamua.XLens.Devel
 
+
+### 7. Uninstalling
+
+```bash
+flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
 ```
 
 ---
@@ -296,7 +299,6 @@ First, create a dedicated directory for the Flatpak build and navigate into it:
 
 ```
 mkdir -p "./build/flatpak" && cd "./build/flatpak"
-
 ```
 
 ### 2. Download the Flatpak Builder Tools
@@ -305,7 +307,6 @@ Clone the official tools repository to get the `flatpak-pip-generator` script:
 
 ```
 git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builder
-
 ```
 
 ### 3. Generate the Python dependencies manifest
@@ -318,7 +319,6 @@ pip install --user requirements-parser
 
 # Run the generator
 python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o python3-modules.json
-
 ```
 
 ### 4. Lint the Flatpak manifest
@@ -329,7 +329,6 @@ Once installed, run this command to check your manifest:
 
 ```
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
-
 ```
 
 ### 5. Build and install the Flatpak
@@ -338,7 +337,6 @@ Use `flatpak-builder` to compile the app, pull any missing dependencies from Fla
 
 ```
 flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
-
 ```
 
 ### 6. Lint the built repository
@@ -347,7 +345,6 @@ After the build completes successfully, lint the generated repository:
 
 ```
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo ./repo
-
 ```
 
 ### 7. Uninstalling
@@ -356,7 +353,6 @@ If you need to remove the installed application, run:
 
 ```
 flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
-
 ```
 ---
 
@@ -474,6 +470,7 @@ This project uses two separate manifest files to follow Flatpak best practices, 
 
 * **Production Manifest (`org.gnome.gitlab.Oumuamua.xlens.yaml`):** This is the official stable version intended for Flathub. It builds against a stable GNOME runtime (e.g., version 51) and pulls strictly version-controlled source code.
 * **Development Manifest (`org.gnome.gitlab.Oumuamua.xlens.Devel.yaml`):** This is used for local testing. It builds against GNOME Nightly (the `master` branch) to test against upcoming GNOME features and compiles your local, uncommitted directory changes instantly.
+Also run it with `XLENS_ENABLE_TRACE_LOGS=true` environment variable, to enable trace logging via `@debug_log` decorator.
 
 
 
