@@ -7,7 +7,7 @@ from concurrent.futures import ProcessPoolExecutor
 from enum import Enum
 
 from gi.repository import Gdk, Gtk
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 
 from . import TextExtractor, appLogger
 from .ConfigManager import ConfigManager
@@ -53,7 +53,10 @@ class ImageProcessingContext:
                     #    task = getTextFromEasyOCR()
                     case _:
                         logger.critical(
-                            "Should be unreachable. Something wrong in code."
+                            "Unrecognised Image Processing Module. Should be unreachable. Something wrong in code."
+                        )
+                        raise TextExtractor.ImageProcessingException(
+                            "Unrecognised Image Processing Module"
                         )
                 event_loop = asyncio.get_running_loop()
                 with ProcessPoolExecutor() as executor:
@@ -107,30 +110,31 @@ class ImageProcessingContext:
             logger.error(f"Invalid URL {ve}.")
             raise SetImageException("Invalid URL")
         # --- AI-assisted (modified) end ---
-        except Exception as e:
+        except (UnidentifiedImageError, OSError) as e:
             logger.error(
                 f"Failed to process the downloaded image data: {e}. The type of Exception is {type(e)}"
             )
-            raise SetImageException("Invalid Image Data")
+            raise SetImageException("Invalid Image Data") from e
 
     def setImageFromFilePath(self, filePath: str) -> None:
-        import os.path
 
         logger.debug("Set Image from FilePath")
         logger.info(f"File Path To get Image From {filePath}")
 
-        if not os.path.isfile(filePath):
-            logger.error("FilePath is not a file.")
-            raise SetImageException("Invalid FilePath")
-        else:
-            try:
-                self.image = Image.open(filePath)
-                logger.info(f"successfully set Image from File Path: {filePath}")
-            except Exception as e:
-                logger.error(
-                    f"Unable to load Image from filePath: {filePath}, got Exception : {e}"
-                )
-                raise SetImageException("Unable to load Image")
+        try:
+            self.image = Image.open(filePath)
+            logger.info(f"successfully set Image from File Path: {filePath}")
+        except (FileNotFoundError, PermissionError) as e:
+            logger.error(f"Unable to access file at {filePath}, Error : {e}")
+            raise SetImageException("Unable to access Image") from e
+        except UnidentifiedImageError as e:
+            logger.error(f"File {filePath} is not valid Image, Error : {e}")
+            raise SetImageException("Invalid image format") from e
+        except OSError as e:
+            logger.error(
+                f"Unable to load Image from filePath: {filePath}, got Exception : {e}"
+            )
+            raise SetImageException("Unable to load Image") from e
 
     def setImageFromImage(self, image: Image) -> None:
         logger.debug("Set Image from another Image")
@@ -152,7 +156,7 @@ class ImageProcessingContext:
         source: str | Image | None,
         errorCallbackFunction: Callable[[str], None],
         application: Gtk.Application,
-    ) -> None:
+    ) -> bool:
         logger.debug(f"Image source type {inputSourceType}")
         ipc: ImageProcessingContext = ImageProcessingContext(configPath, application)
         try:
@@ -164,7 +168,10 @@ class ImageProcessingContext:
                 case ImageProcessingContext.ImageInputSourceType.IMAGE:
                     ipc.setImageFromImage(source)
                 case _:
-                    logger.critical("Should be unreachable. Something wrong in code.")
+                    logger.critical(
+                        "Unrecognised Image Source. Should be unreachable. Something wrong in code."
+                    )
+                    raise SetImageException("Unrecognised Image Source")
         except SetImageException as e:
             logger.info("Error Callback Function called.")
             errorCallbackFunction(str(e))
@@ -178,16 +185,12 @@ class ImageProcessingContext:
                     clipboard = Gdk.Display.get_default().get_clipboard()
                     clipboard.set(ipc.outputText)
                 return True
-            except TextExtractor.ImageProcessingException as ipe:
-                logger.error(f"Error: {ipe!s}")
-                logger.info("Error Callback Function called.")
-                errorCallbackFunction(str(ipe))
-                logger.debug("Exiting from Callback")
-                # maybe try another model??
-            except Exception as e:
+            except (TextExtractor.ImageProcessingException, KeyError) as e:
                 logger.error(f"Error: {e!s}")
                 logger.info("Error Callback Function called.")
                 errorCallbackFunction(str(e))
                 logger.debug("Exiting from Callback")
+                # maybe try another model??
+
         finally:
             pass
