@@ -87,6 +87,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
 
         self.app_nav_view.connect("popped", self.FromURLPage.on_back_from_url_page)
 
+    @app_utils.debug_log
     def on_close_request(self, window) -> bool:
 
         self.get_application().quit()
@@ -95,10 +96,11 @@ class XlensMainWindow(Adw.ApplicationWindow):
         return False
 
     @app_utils.async_handler
+    @app_utils.debug_log
     async def open_file_dialog(self, action, parameter) -> None:
-        logger.info("Open Action Started.")
 
         @app_utils.async_handler
+        @app_utils.debug_log
         # --- AI-assisted (modified) start ---
         async def on_open_response(
             dialog: Gtk.FileDialog, result: Gio.AsyncResult
@@ -117,6 +119,7 @@ class XlensMainWindow(Adw.ApplicationWindow):
                 logger.error(f"Gtk File Dialog Error: {err!s}")
 
         @app_utils.async_handler
+        @app_utils.debug_log
         # --- AI-assisted (modified) start ---
         async def open_file(file: Gio.File) -> None:
             file_path = file.peek_path()
@@ -155,9 +158,8 @@ class XlensMainWindow(Adw.ApplicationWindow):
     # --- AI-assisted (modified) end ---
 
     @app_utils.async_handler
+    @app_utils.debug_log
     async def start_paste_procedure(self, action, parameter) -> None:
-
-        logger.debug("started paste action")
 
         # --- AI-assisted (modified) start ---
         # Get the clipboard from the default display
@@ -291,15 +293,16 @@ class XlensMainWindow(Adw.ApplicationWindow):
             return
 
     @Gtk.Template.Callback()
+    @app_utils.debug_log
     def menu_button_clicked(self, button) -> None:
-        logger.info("Preferences button clicked.")
         self.app_nav_view.push_by_tag("preferences_page")
 
     @app_utils.async_handler
+    @app_utils.debug_log
     async def start_take_screenshot_procedure(self, action, parameter) -> None:
-        logger.debug("take screenshot button clicked")
 
         @app_utils.async_handler
+        @app_utils.debug_log
         async def take_screenshot_callback_function(portal, result, user_data) -> None:
             try:
                 # --- AI-assisted (modified) start ---
@@ -343,11 +346,12 @@ class XlensMainWindow(Adw.ApplicationWindow):
             logger.error(f"Failed to initiate screenshot: {e}")
 
     @Gtk.Template.Callback()
+    @app_utils.debug_log
     def from_url_button_clicked(self, button) -> None:
-        logger.info(f"{button} clicked.")
         self.app_nav_view.push_by_tag("from_url_page")
         logger.info("Pushed to 'from_url_page'")
 
+    @app_utils.debug_log
     def restrict_actions_to_main_page(self) -> None:
         def on_visible_page_changed(nav_view, param_spec, window):
 
