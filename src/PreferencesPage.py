@@ -4,7 +4,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gio, Gtk
 
-from . import appLogger
+from . import app_utils, appLogger
 from .ConfigManager import ConfigManager
 
 logger = appLogger.getLogger(__name__)
@@ -28,6 +28,7 @@ class PreferencesPage(Adw.NavigationPage):
         self._bind_switch_auto_copy()
         self._bind_switch_save_screenshot()
 
+    @app_utils.debug_log
     def _bind_switch_auto_copy(self) -> None:
         ConfigManager.bind(
             "auto-copy-output-text",
@@ -36,6 +37,7 @@ class PreferencesPage(Adw.NavigationPage):
             Gio.SettingsBindFlags.DEFAULT,
         )
 
+    @app_utils.debug_log
     def _bind_switch_save_screenshot(self) -> None:
         ConfigManager.bind(
             "delete-taken-screenshot-image",
