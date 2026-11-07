@@ -33,6 +33,7 @@ class FromURLPage(Adw.NavigationPage):
 
         logger.info("'FromURL' Page Initialized")
 
+    @app_utils.debug_log
     def on_back_from_url_page(
         self, nav_view: Adw.NavigationView, popped_page: Adw.NavigationPage
     ) -> None:
@@ -42,8 +43,8 @@ class FromURLPage(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     @app_utils.async_handler
+    @app_utils.debug_log
     async def on_extract_text_from_url_button_clicked(self, entry) -> None:
-        logger.debug("Extract text from URL button clicked")
         url_link = self.URL_entry.get_text().strip()
         logger.debug(f"URL link from search entry : {url_link}")
         if not url_link:
