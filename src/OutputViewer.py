@@ -4,7 +4,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk
 
-from . import appLogger
+from . import app_utils, appLogger
 
 logger = appLogger.getLogger(__name__)
 import gettext
@@ -24,6 +24,7 @@ class OutputViewerWindow(Adw.ApplicationWindow):
         self.set_title(_("Output {ID}").format(ID=OutputViewerWindow.ID))
         logger.info(f"Output Window Initialized, title = '{self.get_title()}'")
 
+    @app_utils.debug_log
     def setOutputText(self, text: str) -> None:
         buffer = self.outputTextView.get_buffer()
         buffer.set_text(text)
