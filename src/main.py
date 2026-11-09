@@ -30,7 +30,7 @@ gi.require_version("XdpGtk4", "1.0")
 import asyncio
 
 from gi.events import GLibEventLoopPolicy
-from gi.repository import Adw, Gio
+from gi.repository import Adw, Gio, Gtk
 
 from . import app_utils, appLogger
 from .window import XlensMainWindow
@@ -75,12 +75,15 @@ class XlensApplication(Adw.Application):
         about = Adw.AboutDialog(
             application_name="XLens",
             application_icon="org.gnome.gitlab.Oumuamua.XLens",
-            developer_name="Oumuamua",
+            developer_name="Aryan Pandey (@Oumuamua)",
             version=self.version,
             # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-            translator_credits=_("translator-credits"),
-            developers=["Oumuamua"],
-            copyright="© 2026 Oumuamua",
+            # translator_credits=_("translator-credits"),
+            developers=["Aryan Pandey (@Oumuamua) https://gitlab.gnome.org/Oumuamua"],
+            copyright="© 2026 Aryan Pandey",
+            license_type=Gtk.License.GPL_3_0,
+            issue_url="https://gitlab.gnome.org/Oumuamua/XLens/-/issues",
+            website="https://gitlab.gnome.org/Oumuamua/XLens",
         )
         about.present(self.props.active_window)
 
