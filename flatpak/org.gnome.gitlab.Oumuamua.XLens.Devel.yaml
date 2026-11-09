@@ -35,6 +35,8 @@ modules:
       builddir: true
       config-opts:
         - "--disable-static"
+      license-files:
+        - "leptonica-license.txt"
       sources:
         - type: git
           url: "https://github.com/DanBloomberg/leptonica"
