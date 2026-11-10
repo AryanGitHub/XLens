@@ -80,6 +80,7 @@ class XlensApplication(Adw.Application):
             # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
             # translator_credits=_("translator-credits"),
             developers=["Aryan Pandey (@Oumuamua) https://gitlab.gnome.org/Oumuamua"],
+            artists=["Aryan Pandey (@Oumuamua) https://gitlab.gnome.org/Oumuamua"],
             copyright="© 2026 Aryan Pandey",
             license_type=Gtk.License.GPL_3_0,
             issue_url="https://gitlab.gnome.org/Oumuamua/XLens/-/issues",
