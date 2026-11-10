@@ -33,8 +33,8 @@
                             <property name="valign">center</property>
                             <child>
                               <object class="GtkImage">
-                                <property name="file">./image.svg</property>
                                 <property name="hexpand">True</property>
+                                <property name="icon-name">org.gnome.gitlab.Oumuamua.XLens</property>
                                 <property name="icon-size">large</property>
                                 <property name="pixel-size">186</property>
                                 <layout>
