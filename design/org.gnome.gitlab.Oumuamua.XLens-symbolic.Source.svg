@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
-   sodipodi:docname="org.gnome.gitlab.Oumuamua.XLens.Source.Symbol.svg"
+   sodipodi:docname="org.gnome.gitlab.Oumuamua.XLens-symbolic.Source.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
         </dc:creator>
         <dc:description>Symbolic Icon for Project X Lens</dc:description>
         <cc:license
-           rdf:resource="[https://spdx.org/licenses/GPL-3.0-or-later.html](https://spdx.org/licenses/GPL-3.0-or-later.html)" />
+           rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html" />
       </cc:Work>
     </rdf:RDF>
   </metadata>

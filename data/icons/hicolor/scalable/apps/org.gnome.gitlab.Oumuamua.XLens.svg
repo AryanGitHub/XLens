@@ -98,7 +98,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
         </dc:creator>
         <dc:description>Icon for Project X Lens</dc:description>
         <cc:license
-           rdf:resource="[https://spdx.org/licenses/GPL-3.0-or-later.html](https://spdx.org/licenses/GPL-3.0-or-later.html)" />
+           rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html" />
       </cc:Work>
     </rdf:RDF>
   </metadata>
