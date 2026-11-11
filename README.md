@@ -255,7 +255,7 @@ The generator requires the `requirements-parser` package. Install it, and then r
 pip install --user requirements-parser
 
 # Run the generator
-python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o python3-modules.json
+python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o ./../../flatpak/python3-modules.json
 ```
 
 ### 4. Add the GNOME Nightly Flatpak Repository
@@ -318,7 +318,7 @@ The generator requires the `requirements-parser` package. Install it, and then r
 pip install --user requirements-parser
 
 # Run the generator
-python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o python3-modules.json
+python3 .flatpak_builder/pip/flatpak-pip-generator -r ../../requirements.txt -o ./../../flatpak/python3-modules.json
 ```
 
 ### 4. Lint the Flatpak manifest
