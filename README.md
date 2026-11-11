@@ -68,7 +68,6 @@ Before setting up the project, install the necessary development tools and libra
   
 
 ```bash
-
 sudo dnf install meson python3-gobject gettext glib-compile-resources gtk-update-icon-cache update-desktop-database gtk4-devel libadwaita-devel libportal-devel libportal-gtk4-devel tesseract
 ```
 
@@ -175,7 +174,6 @@ You can execute the following steps one by one:
   
 
 ```bash
-
 # 1. Setup the build directory
 meson setup build --prefix ~/.local
 
@@ -231,7 +229,7 @@ You can build and install XLens as a Flatpak using the official Flatpak Builder 
 
 First, create a dedicated directory for the Flatpak build and navigate into it:
 
-```
+```bash
 mkdir -p "./build/flatpak" && cd "./build/flatpak"
 ```
 
@@ -239,7 +237,7 @@ mkdir -p "./build/flatpak" && cd "./build/flatpak"
 
 Clone the official tools repository to get the `flatpak-pip-generator` script:
 
-```
+```bash
 git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builder
 ```
 
@@ -247,7 +245,7 @@ git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builde
 
 The generator requires the `requirements-parser` package. Install it, and then run the script against the project's `requirements.txt` to generate the `python3-modules.json` file:
 
-```
+```bash
 # Install the script's required dependency
 pip install --user requirements-parser
 
@@ -294,7 +292,7 @@ You can build and install XLens as a Flatpak using the official Flatpak Builder 
 
 First, create a dedicated directory for the Flatpak build and navigate into it:
 
-```
+```bash
 mkdir -p "./build/flatpak" && cd "./build/flatpak"
 ```
 
@@ -302,7 +300,7 @@ mkdir -p "./build/flatpak" && cd "./build/flatpak"
 
 Clone the official tools repository to get the `flatpak-pip-generator` script:
 
-```
+```bash
 git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builder
 ```
 
@@ -310,7 +308,7 @@ git clone https://github.com/flatpak/flatpak-builder-tools.git ./.flatpak_builde
 
 The generator requires the `requirements-parser` package. Install it, and then run the script against the project's `requirements.txt` to generate the `python3-modules.json` file:
 
-```
+```bash
 # Install the script's required dependency
 pip install --user requirements-parser
 
@@ -324,7 +322,7 @@ Before building, verify your manifest against Flathub standards using the [flatp
 
 Once installed, run this command to check your manifest:
 
-```
+```bash
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
 ```
 
@@ -332,7 +330,7 @@ flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest ../../fl
 
 Use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
 
-```
+```bash
 flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
 ```
 
@@ -340,7 +338,7 @@ flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --i
 
 After the build completes successfully, lint the generated repository:
 
-```
+```bash
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo ./repo
 ```
 
@@ -348,7 +346,7 @@ flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo ./repo
 
 If you need to remove the installed application, run:
 
-```
+```bash
 flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
 ```
 ---
@@ -394,7 +392,7 @@ Stage and commit the `meson.build` change to your Git repository.
 
   
 
-```
+```bash
 git add meson.build
 
 git commit -m "chore: bump version to 1.0.0"
@@ -410,7 +408,7 @@ This is the most important step. Tag the commit you just made with the exact sam
 
   
 
-```
+```bash
 git tag 1.0.0
 ```
 
@@ -428,7 +426,7 @@ Push your latest commits, and make sure to push the tags as well.
 
   
 
-```
+```bash
 git push origin main
 
 git push --tags
@@ -440,13 +438,13 @@ To ensure build reproducibility and satisfy Flathub requirements, you must pin t
 
 1. **Get the full commit hash** for your new tag by running:
 
-   ```
+   ```bash
    git rev-parse 1.0.0
    ```
 
 2. **Update the manifest:** Open `org.gnome.gitlab.Oumuamua.XLens.yaml` and add the `tag` and `commit` under the `xlens` module sources:
 
-   ```
+   ```yaml
    modules:
      - name: xlens
        buildsystem: meson 
