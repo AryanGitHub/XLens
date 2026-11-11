@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: 2026 Aryan Pandey (@Oumuamua)
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <component type="desktop-application">
   <id>org.gnome.gitlab.Oumuamua.XLens</id>
   <metadata_license>CC0-1.0</metadata_license>
@@ -8,7 +14,9 @@
   <summary>An OCR GTK4 and Libadwaita app</summary>
   <description>
     <p>
-    A native Optical Character Recognition (OCR) application for the GNOME desktop, built with GTK4 and Libadwaita.
+    A Optical Character Recognition (OCR) wrapper application for the GNOME desktop, built with GTK4 and Libadwaita.
+    </p>
+    <p>
     Extract text from images and scanned documents seamlessly with a modern, adaptive user interface.
     </p>
   </description>
@@ -36,8 +44,63 @@
   <!-- Use the OARS website (https://hughsie.github.io/oars/generate.html) to generate these and make sure to use oars-1.1 -->
   <content_rating type="oars-1.1" />
 
+  <categories>
+    <category>Utility</category>
+    <category>Office</category>
+    <category>OCR</category>
+    <category>Scanning</category>
+  </categories>
+
+  <keywords>
+    <keyword>ocr</keyword>
+    <keyword>text</keyword>
+    <keyword>extract</keyword>
+    <keyword>image</keyword>
+    <keyword>scan</keyword>
+    <keyword>recognize</keyword>
+    <keyword>document</keyword>
+  </keywords>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#005aad</color>
+    <color type="primary" scheme_preference="dark">#001d61</color>
+  </branding>
+
+  <!-- ONLY desktop supported -->
+  <requires>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <display_length compare="ge">450</display_length>
+  </requires>
 
 
+
+<screenshots>
+  <screenshot type="default">
+    <image>https://raw.githubusercontent.com/AryanGitHub/XLens/1b141b58558a466da064afb67ffcaa2798990d40/screenshots/main-page-dark-mode.png</image>
+    <caption>Main Page of XLens App in Dark Mode</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/AryanGitHub/XLens/1b141b58558a466da064afb67ffcaa2798990d40/screenshots/main-page-light-mode.png</image>
+    <caption>Main Page of XLens App in Light Mode</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/AryanGitHub/XLens/1b141b58558a466da064afb67ffcaa2798990d40/screenshots/from-url-page-dark-mode.png</image>
+    <caption>Enter URL of Imag to extract Text, in Dark Mode</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/AryanGitHub/XLens/1b141b58558a466da064afb67ffcaa2798990d40/screenshots/from-url-page-light-mode.png</image>
+    <caption>Enter URL of Imag to extract Text, in Light Mode</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/AryanGitHub/XLens/1b141b58558a466da064afb67ffcaa2798990d40/screenshots/output-window-dark-mode.png</image>
+    <caption>Output Window of XLens App in Dark Mode</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/AryanGitHub/XLens/1b141b58558a466da064afb67ffcaa2798990d40/screenshots/preferences-page-dark-mode.png</image>
+    <caption>Preferences Page of XLens App in Dark Mode</caption>
+  </screenshot>
+</screenshots>
 
 
   <releases>
