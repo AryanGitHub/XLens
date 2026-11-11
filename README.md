@@ -83,10 +83,7 @@ Once the dependencies are installed, clone the project to your local machine and
   
 
 ```bash
-
-git clone https://gitlab.gnome.org/Oumuamua/XLens.git
-
-cd xlens
+git clone https://gitlab.gnome.org/Oumuamua/XLens.git && cd XLens
 ```
 
   
