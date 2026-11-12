@@ -47,6 +47,40 @@ Extract text from images and scanned documents seamlessly with a modern, adaptiv
 
 ---
 
+## Generative AI Contribution Policy
+
+To maintain a high standard of code quality, security, and maintainability, this project enforces strict guidelines regarding AI-generated code. This policy aligns closely with Flathub's Generative AI rules.
+
+**1. No "Vibe Coding"**
+We do not accept "vibe code"—code generated blindly by an LLM that you have copy-pasted without fully understanding how it works under the hood. If you submit code, you take 100% ownership of it. You must be able to explain it, debug it, and maintain it if it breaks. Pull requests consisting of low-effort, mass-generated AI code will be rejected immediately.
+
+**2. Research and Debugging (Allowed & No Disclosure Needed)**
+Using AI tools (ChatGPT, Claude, Copilot, etc.) as a search engine to research APIs, understand concepts, or debug errors is completely fine. If you write the resulting code yourself, no disclosure is required.
+
+**3. Boilerplate Generation (Allowed with Strict Disclosure)**
+You may use AI to generate repetitive boilerplate (e.g., standard UI layouts or basic utility functions) provided that:
+
+* You manually review and modify the output to fit the project's architecture.
+* The generated snippets are small and easily maintainable.
+* You **explicitly disclose** the AI-assisted code.
+
+**4. How to Disclose AI-Assisted Code**
+If you include AI-generated boilerplate in your pull request, you must mark it directly in the source code using these exact boundary comments:
+
+```python
+# --- AI-assisted (modified) start ---
+[Your AI-generated/modified code goes here]
+# --- AI-assisted (modified) end ---
+```
+*Additionally, you must state in your Pull Request description that you have included AI-assisted code and note the approximate line count/percentage.*
+
+**5. Zero-Tolerance Zones**
+
+* **Packaging Manifests:** Flathub manifests (`.json` or `.yaml`) must be 100% human-written. AI cannot be used here under any circumstances.
+* **Core Application Logic:** The core functionality (image processing, text extraction, etc.) must be written by humans.
+* **Automated PRs:** Do not use AI agents to automate pull requests, write your commit messages, or reply to human reviewers.
+
+
 ## Building
 
   
