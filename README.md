@@ -47,6 +47,13 @@ Extract text from images and scanned documents seamlessly with a modern, adaptiv
 
 ---
 
+## Disclosure per AI policy: 
+> This application contains several small AI-assisted code snippets. I used LLMs to generate some initial boilerplate, which I then manually reviewed, modified, and integrated. These snippets total 78 lines (roughly 3.5% of the total project files).
+> Note: Portions of this README were drafted and formatted with the assistance of AI.
+> To make the review process easy, I have explicitly marked every AI-assisted block directly in the source code using # --- AI-assisted (modified) start --- boundary comments."
+
+
+
 ## Generative AI Contribution Policy
 
 To maintain a high standard of code quality, security, and maintainability, this project enforces strict guidelines regarding AI-generated code. This policy aligns closely with Flathub's Generative AI rules.
