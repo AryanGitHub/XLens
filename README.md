@@ -432,9 +432,56 @@ git push origin main
 git push --tags
 ```
 
-## 5. Update the Flatpak Manifest
+### 5. Update the MetaInfo File
+
+Open `data/org.gnome.gitlab.Oumuamua.XLens.metainfo.xml.in` and make the following updates:
+
+1. **Add the new release entry:** Add a new `<release>` block at the top of the `<releases>` section with the new version number, release date (`YYYY-MM-DD`), and changelog notes, following the [Flathub MetaInfo Release Guidelines](https://docs.flathub.org/docs/for-app-authors/metainfo-guidelines#release).
+
+   ```xml
+   <releases>
+     <release version="1.0.1" date="2024-01-18">
+       <url type="details">[https://example.org/changelog.html#version_1.0.1](https://example.org/changelog.html#version_1.0.1)</url>
+       <description>
+         <p>Release description</p>
+         <ul>
+           <li>List of changes</li>
+           <li>List of changes</li>
+         </ul>
+       </description>
+     </release>
+     <release version="1.0.0" date="2023-08-07">
+       <url type="details">[https://example.org/changelog.html#version_1.0.0](https://example.org/changelog.html#version_1.0.0)</url>
+       <description>
+         <p>Release description</p>
+         <ul>
+           <li>List of changes</li>
+           <li>List of changes</li>
+         </ul>
+       </description>
+     </release>
+   </releases>
+   ```
+
+2. **Update screenshot links to the latest tagged GitHub URL:** Update the `<image>` URLs inside the `<screenshots>` section so they point to the raw GitHub URL for your **new release tag** (e.g., `1.0.0`) rather than `main` or a previous tag.
+
+   ```xml
+   <screenshots>
+     <screenshot type="default">
+       <image>[https://raw.githubusercontent.com/USERNAME/REPO/1.0.0/data/screenshots/screenshot1.png](https://raw.githubusercontent.com/USERNAME/REPO/1.0.0/data/screenshots/screenshot1.png)</image>
+       <caption>Main application window</caption>
+     </screenshot>
+   </screenshots>
+   ```
+
+*(Optional: If the UI, device support, or other app details changed in this release, update the screenshots and corresponding tags as outlined in the [Flathub MetaInfo Screenshot & Metadata Guidelines](https://docs.flathub.org/docs/for-app-authors/metainfo-guidelines)).*
+
+### 6. Update the Flatpak Manifest
 
 To ensure build reproducibility and satisfy Flathub requirements, you must pin the Flatpak manifest to the exact Git tag and commit hash you just created.
+
+
+
 
 1. **Get the full commit hash** for your new tag by running:
 
@@ -442,9 +489,16 @@ To ensure build reproducibility and satisfy Flathub requirements, you must pin t
    git rev-parse 1.0.0
    ```
 
-2. **Update the manifest:** Open `org.gnome.gitlab.Oumuamua.XLens.yaml` and add the `tag` and `commit` under the `xlens` module sources:
+2. **Update the manifest:** Open `org.gnome.gitlab.Oumuamua.XLens.yaml, update `runtime-version` if a newer release is available, and add the `tag` and `commit` under the `xlens` module sources:
+
+**Check for the latest supported runtime:** Visit the [Flathub Runtimes Documentation](https://docs.flathub.org/docs/for-app-authors/runtimes) and [GNOME Release Calendar](https://release.gnome.org/calendar/) to verify the latest supported LTS or stable `runtime-version` (such as `org.gnome.Platform`) and ensure your current runtime has not reached End-of-Life (EOL).
 
    ```yaml
+   runtime: org.gnome.Platform
+   runtime-version: "48" # <-- Verify/update to latest supported version
+   sdk: org.gnome.Sdk
+
+
    modules:
      - name: xlens
        buildsystem: meson 
@@ -456,6 +510,8 @@ To ensure build reproducibility and satisfy Flathub requirements, you must pin t
            tag: "1.0.0"                           # <-- Your new tag
            commit: "INSERT_FULL_COMMIT_HASH_HERE" # <-- The hash from step 1
    ```
+
+
 ---
 
 ## FAQs
