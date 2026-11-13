@@ -11,7 +11,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
   <project_license>GPL-3.0-or-later</project_license>
 
   <name>XLens</name>
-  <summary>An OCR GTK4 and Libadwaita app</summary>
+  <summary>Extract text from images</summary>
   <description>
     <p>
     A Optical Character Recognition (OCR) wrapper application for the GNOME desktop, built with GTK4 and Libadwaita.
