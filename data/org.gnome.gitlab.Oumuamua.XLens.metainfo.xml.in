@@ -12,14 +12,18 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
   <name>XLens</name>
   <summary>Extract text from images</summary>
-  <description>
-    <p>
-    A Optical Character Recognition (OCR) wrapper application for the GNOME desktop, built with GTK4 and Libadwaita.
-    </p>
-    <p>
-    Extract text from images and scanned documents seamlessly with a modern, adaptive user interface.
-    </p>
-  </description>
+<description>
+  <p>
+    XLens turns unselectable pictures and scanned pages into plain text you can immediately copy, edit, and share. Its clean, adaptive interface stays out of your way and adjusts smoothly to any screen size.
+  </p>
+  <p>Grab text from wherever you are working:</p>
+  <ul>
+    <li>Local image files and scanned documents</li>
+    <li>Screenshots of any area on your screen</li>
+    <li>Copied images pasted from your clipboard</li>
+    <li>Web images loaded directly via URL</li>
+  </ul>
+</description>
 
   <developer id="org.gnome.gitlab.Oumuamua">
     <name>Aryan Pandey</name>
