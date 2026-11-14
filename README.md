@@ -407,85 +407,14 @@ flatpak uninstall org.gnome.gitlab.Oumuamua.XLens
 
 ## Release Process
 
-  
 
 This project uses dynamic versioning based on Git tags (`vcs_tag` via Meson). During normal development, the application automatically displays a version string containing the latest commit hash (e.g., `0.1.0-4-g1234abc`).
 
-  
-
 When it is time to make an official public release without the development hashes, follow these steps in order.
 
-  
-
-### 1. Update the Base Version
 
   
-
-Open the root `meson.build` file and update the `version:` argument inside the `project()` definition to your new release number.
-
-  
-
-```
-project('my-gtk-app',
-
-version: '1.0.0', # <-- Update this number
-
-meson_version: '>= 1.7.0'
-
-)
-```
-
-  
-
-### 2. Commit the Version Bump
-
-  
-
-Stage and commit the `meson.build` change to your Git repository.
-
-  
-
-```bash
-git add meson.build
-
-git commit -m "chore: bump version to 1.0.0"
-```
-
-  
-
-### 3. Create the Git Tag
-
-  
-
-This is the most important step. Tag the commit you just made with the exact same version number. Meson will read this tag to generate a clean version string.
-
-  
-
-```bash
-git tag 1.0.0
-```
-
-  
-
-*(Note: Ensure the tag matches your `meson.build` version exactly so there is no confusion).*
-
-  
-
-### 4. Push to the Remote Repository
-
-  
-
-Push your latest commits, and make sure to push the tags as well.
-
-  
-
-```bash
-git push origin main
-
-git push --tags
-```
-
-### 5. Update the MetaInfo File
+### 1. Update the MetaInfo File
 
 Open `data/org.gnome.gitlab.Oumuamua.XLens.metainfo.xml.in` and make the following updates:
 
@@ -529,12 +458,58 @@ Open `data/org.gnome.gitlab.Oumuamua.XLens.metainfo.xml.in` and make the followi
 
 *(Optional: If the UI, device support, or other app details changed in this release, update the screenshots and corresponding tags as outlined in the [Flathub MetaInfo Screenshot & Metadata Guidelines](https://docs.flathub.org/docs/for-app-authors/metainfo-guidelines)).*
 
+### 2. Update the Base Version
+
+Open the root `meson.build` file and update the `version:` argument inside the `project()` definition to your new release number.
+
+```
+project('my-gtk-app',
+
+version: '1.0.0', # <-- Update this number
+
+meson_version: '>= 1.7.0'
+
+)
+```
+  
+
+### 3. Commit the Version Bump
+
+Stage and commit the `meson.build` change to your Git repository.
+
+```bash
+git add meson.build
+
+git commit -m "chore: bump version to 1.0.0"
+```
+
+  
+
+### 4. Create the Git Tag
+
+This is the most important step. Tag the commit you just made with the exact same version number. Meson will read this tag to generate a clean version string.
+
+```bash
+git tag 1.0.0
+```
+*(Note: Ensure the tag matches your `meson.build` version exactly so there is no confusion).*
+
+  
+
+### 5. Push to the Remote Repository
+
+Push your latest commits, and make sure to push the tags as well.
+
+```bash
+git push origin main
+
+git push --tags
+```
+
+
 ### 6. Update the Flatpak Manifest
 
 To ensure build reproducibility and satisfy Flathub requirements, you must pin the Flatpak manifest to the exact Git tag and commit hash you just created.
-
-
-
 
 1. **Get the full commit hash** for your new tag by running:
 
