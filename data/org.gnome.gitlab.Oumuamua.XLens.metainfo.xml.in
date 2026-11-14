@@ -110,6 +110,20 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 
   <releases>
+  <release version="1.0.0" date="2026-11-15">
+    <description>
+      <p>Initial 1.0.0 release featuring fast, asynchronous text extraction with a modern Libadwaita interface.</p>
+      <ul>
+        <li>Extract text from local image files, screenshots, clipboard images, and image URLs</li>
+        <li>Added preferences to automatically copy extracted text and auto-save screenshots</li>
+        <li>Added keyboard shortcuts for quick screenshot capture and actions</li>
+        <li>Migrated application preferences to GSettings for reliable configuration storage</li>
+        <li>Responsive, non-blocking image processing powered by background workers</li>
+        <li>Added full translation support across the user interface</li>
+        <li>Fixed screenshot capture when auto-save is disabled and improved file dialog error handling</li>
+      </ul>
+    </description>
+  </release>
     <release version="0.0.5" date="2026-10-22">
       <description translate="no">
         <p>First Alpha Release</p>
