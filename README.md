@@ -318,7 +318,17 @@ Follow the instructions there to install Flatpak and add the `gnome-nightly` rem
 Finally, use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
 
 ```bash
-flatpak-builder --force-clean --user --install-deps-from=gnome-nightly --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.Devel.yaml
+flatpak run org.flatpak.Builder \
+  --force-clean \
+  --user \
+  --install \
+  --install-deps-from=gnome-nightly \
+  --ccache \
+  --disable-rofiles-fuse \
+  --mirror-screenshots-url=https://dl.flathub.org/media/ \
+  --compose-url-policy=full \
+  --repo=repo \
+  builddir ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.Devel.yaml
 ```
 
 ### 6. (Optional) Enable `@debug_log` decorator
@@ -384,7 +394,17 @@ flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest ../../fl
 Use `flatpak-builder` to compile the app, pull any missing dependencies from Flathub, and install it to your user environment:
 
 ```bash
-flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir --disable-rofiles-fuse ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
+flatpak run org.flatpak.Builder \
+  --force-clean \
+  --sandbox \
+  --user \
+  --install \
+  --install-deps-from=flathub \
+  --disable-rofiles-fuse \
+  --mirror-screenshots-url=https://dl.flathub.org/media/ \
+  --compose-url-policy=full \
+  --repo=repo \
+  builddir ../../flatpak/org.gnome.gitlab.Oumuamua.XLens.yaml
 ```
 
 ### 6. Lint the built repository
