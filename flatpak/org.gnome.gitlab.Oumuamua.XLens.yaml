@@ -75,5 +75,5 @@ modules:
       # use type git for release
       - type: git
         url: "https://gitlab.gnome.org/Oumuamua/XLens"
-        # tag:
-        # commit:
+        tag: "1.0.0"
+        commit: "addfc268d380ba23538ad48b77279b351ac7af03"
