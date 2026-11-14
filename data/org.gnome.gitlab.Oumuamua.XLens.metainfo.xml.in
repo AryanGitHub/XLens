@@ -39,7 +39,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
   <!-- This could for example be an HTTPS URL to an online form or a page describing how to contact the developer -->
   <url type="contact">https://aryangithub.github.io/personal-website/contact</url>
   <!-- URLs of this type should point to a webpage showing information on how to contribute to the described software project -->
-  <url type="contribute">https://gitlab.gnome.org/Oumuamua/XLens</url>
+  <url type="contribute">https://gitlab.gnome.org/Oumuamua/XLens#contributing</url>
+
+  <url type="faq">https://gitlab.gnome.org/Oumuamua/XLens#faqs</url>
 
 
   <!-- All graphical applications having a desktop file must have this tag in the MetaInfo.
