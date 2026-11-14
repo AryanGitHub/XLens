@@ -52,7 +52,19 @@ Extract text from images and scanned documents seamlessly with a modern, adaptiv
 > Note: Portions of this README were drafted and formatted with the assistance of AI.
 > To make the review process easy, I have explicitly marked every AI-assisted block directly in the source code using # --- AI-assisted (modified) start --- boundary comments."
 
+## Contributing
 
+I'd love some help with this project! You don't have to be a Python wizard or a GTK expert to jump in. Honestly, you don't even need to build new features to make a huge difference. 
+
+Right now, I'm always looking for an extra set of hands on things like:
+
+* **Code cleanups:** Adding type hints, cleaning up the configuration logic, or dialing in the linters.
+* **Automating things:** If you know your way around CI/CD pipelines or packaging, I'd love some help getting that set up.
+* **Docs:** Writing docstrings, explaining how the internals work, or making the guides clearer. Good docs are just as important as good code.
+* **The UI:** Tweaking the GTK4 interface, fixing layout glitches, or just making the app feel snappier.
+* **Bug hunting:** Squashing weird OCR edge cases and general bug fixes.
+
+If you know what you want to fix or improve, feel free to just fork it and open a PR. If you're not sure where to start or want to bounce an idea around first, just open an issue and we can chat about it.
 
 ## Generative AI Contribution Policy
 
