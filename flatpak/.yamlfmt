@@ -1,0 +1,25 @@
+formatter:
+  type: basic
+  
+  # Indentation must be 2 spaces
+  indent: 2
+  
+  # LF line endings
+  line_ending: lf
+  
+  # Child elements and list items must be indented consistently
+  indentless_arrays: false
+  
+  # Blank lines should be inserted between modules
+  retain_line_breaks_single: true
+  
+  # EXPLICIT: Files must have a trailing newline
+  eof_newline: true
+  
+  # EXPLICIT: Strips any trailing whitespace at the end of individual lines
+  strip_trailing_whitespace: true
+  
+  # Yamlfmt's underlying parser (yaml.v3) natively ensures:
+  # - Strings remain unquoted unless quoting is required
+  # - Values are NOT vertically aligned (single space after colon)
+  # - UTF-8 encoding is strictly enforced
