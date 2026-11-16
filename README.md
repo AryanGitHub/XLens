@@ -66,6 +66,15 @@ Right now, I'm always looking for an extra set of hands on things like:
 
 If you know what you want to fix or improve, feel free to just fork it and open a PR. If you're not sure where to start or want to bounce an idea around first, just open an issue and we can chat about it.
 
+## Git Workflow
+
+This project follows a standard Gitflow-based branching strategy to manage development and releases effectively:
+
+* **`master` branch:** This is the stable production branch. It is strictly reserved for releasing new versions and applying urgent hot-patches. 
+* **`dev` branch:** The primary integration branch for active development. All completed features and general bug fixes are merged here for testing and stabilization before being promoted to `master`.
+* **`feature/*` and `bugfix/*` branches:** Used for day-to-day development. When working on a new feature or fixing a bug, create a new branch from `dev` (e.g., `feature/add-new-ocr` or `bugfix/fix-save-image-glitch`). Once your work is complete and tested, open a Merge Request to merge it back into the `dev` branch.
+
+
 ## Generative AI Contribution Policy
 
 To maintain a high standard of code quality, security, and maintainability, this project enforces strict guidelines regarding AI-generated code. This policy aligns closely with Flathub's Generative AI rules.
